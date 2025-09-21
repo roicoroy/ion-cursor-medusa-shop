@@ -6,11 +6,9 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { NavigationService } from 'src/app/shared/navigation/navigation.service';
 import { ModalController } from '@ionic/angular/standalone';
-import { CardPaymentModal } from '../../Components/card-payment-modal/card-payment-modal';
 import { CheckoutActions } from 'src/app/store/checkout/checkout.actions';
 import { CheckoutState } from 'src/app/store/checkout/checkout.state';
 import { MedusaCartState } from 'src/app/store/medusa-cart/medusa-cart.state';
-import { PaymentProvidersComponent } from "../../Components/payment-providers/payment-providers.component";
 
 @Component({
   selector: 'app-payment-step',
@@ -31,7 +29,6 @@ import { PaymentProvidersComponent } from "../../Components/payment-providers/pa
     IonButton,
     IonButtons,
     IonIcon,
-    PaymentProvidersComponent,
   ]
 })
 export class PaymentStepComponent implements OnDestroy {
@@ -64,6 +61,8 @@ export class PaymentStepComponent implements OnDestroy {
   async paymentModal(secret_key?: string) {
     if (secret_key != null) {
       this.modalOpen = true; // Set flag before creating modal
+      
+      const { CardPaymentModal } = await import('../../Components/card-payment-modal/card-payment-modal');
       
       const modal = await this.modalController.create({
         component: CardPaymentModal,

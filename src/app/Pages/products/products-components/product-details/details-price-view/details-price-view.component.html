@@ -1,0 +1,11 @@
+<ion-button (click)="addToCart()" expand="block" fill="solid" shape="round" color="danger">
+    <ion-row>
+        <ion-col size="12">
+            {{ variant.title }}
+        </ion-col>
+        <ion-col>
+            {{ variant.calculated_price?.calculated_amount | shortNumber | medusaCurrency:
+            variant.calculated_price?.currency_code }}
+        </ion-col>
+    </ion-row>
+</ion-button>

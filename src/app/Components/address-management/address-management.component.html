@@ -1,0 +1,106 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="customer-orders"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Address Management</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addNewAddress()" fill="clear">
+        <ion-icon name="add" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Address Management</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Add New Address Button -->
+  <div class="add-address-section">
+    <ion-button 
+      (click)="addNewAddress()" 
+      expand="block" 
+      fill="solid" 
+      class="add-address-button">
+      <ion-icon name="add-circle" slot="start"></ion-icon>
+      Add New Address
+    </ion-button>
+  </div>
+
+  <!-- Address List -->
+  <div class="address-list" *ngIf="customer?.shipping_addresses && customer.shipping_addresses.length > 0">
+    <h3 class="section-title">Your Addresses</h3>
+    
+    <ion-list>
+      <ion-item 
+        *ngFor="let address of customer.shipping_addresses" 
+        class="address-item"
+        button
+        (click)="editAddress(address.id)">
+        
+        <div class="address-content">
+          <div class="address-header">
+            <h4 class="address-name">{{ getFullName(address) }}</h4>
+            <div class="address-badges">
+              <ion-badge 
+                *ngIf="isDefaultBilling(address)" 
+                color="primary" 
+                class="badge">
+                Default Billing
+              </ion-badge>
+              <ion-badge 
+                *ngIf="isDefaultShipping(address)" 
+                color="success" 
+                class="badge">
+                Default Shipping
+              </ion-badge>
+            </div>
+          </div>
+          
+          <p class="address-text">{{ getAddressDisplay(address) }}</p>
+          <p class="address-phone" *ngIf="address.phone">
+            <ion-icon name="call" class="icon"></ion-icon>
+            {{ address.phone }}
+          </p>
+        </div>
+
+        <div class="address-actions" slot="end">
+          <ion-button 
+            fill="clear" 
+            size="small"
+            (click)="editAddress(address.id); $event.stopPropagation()">
+            <ion-icon name="create" slot="icon-only"></ion-icon>
+          </ion-button>
+          
+          <ion-button 
+            fill="clear" 
+            size="small"
+            color="danger"
+            (click)="deleteAddress(address.id); $event.stopPropagation()">
+            <ion-icon name="trash" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!customer?.shipping_addresses || customer.shipping_addresses.length === 0">
+    <div class="empty-content">
+      <ion-icon name="location" class="empty-icon"></ion-icon>
+      <h3>No Addresses Found</h3>
+      <p>You haven't added any addresses yet. Add your first address to get started!</p>
+      <ion-button 
+        (click)="addNewAddress()" 
+        fill="solid" 
+        class="add-first-address">
+        <ion-icon name="add" slot="start"></ion-icon>
+        Add Your First Address
+      </ion-button>
+    </div>
+  </div>
+</ion-content> 

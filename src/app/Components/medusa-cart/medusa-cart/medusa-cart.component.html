@@ -1,0 +1,184 @@
+<!-- Loading State -->
+@if (loading) {
+<div class="loading-container ion-text-center ion-padding">
+  <ion-spinner name="crescent"></ion-spinner>
+  <p class="ion-margin-top">Loading cart...</p>
+</div>
+}
+
+<!-- Error State -->
+@if (error && !loading) {
+<div class="error-container ion-text-center ion-padding">
+  <ion-icon name="alert-circle" color="danger" size="large"></ion-icon>
+  <h3>Oops! Something went wrong</h3>
+  <p>{{ error }}</p>
+  <ion-button fill="outline" (click)="refreshCart()">
+    <ion-icon name="refresh-outline" slot="start"></ion-icon>
+    Retry
+  </ion-button>
+</div>
+}
+
+<!-- Cart Content -->
+@if (!loading && !error) {
+<!-- Empty Cart State -->
+@if ((medusaCart$ | async); as medusaCart) {
+@if (isCartEmpty(medusaCart)) {
+<div class="empty-cart-container ion-text-center ion-padding">
+  <ion-icon name="cart-outline" size="large" color="medium"></ion-icon>
+  <h2>Your cart is empty</h2>
+  <p>Add some products to get started!</p>
+  <ion-button fill="solid" (click)="continueShopping()">
+    <ion-icon name="bag" slot="start"></ion-icon>
+    Continue Shopping
+  </ion-button>
+</div>
+}
+
+<!-- Cart Items -->
+@if (!isCartEmpty(medusaCart)) {
+<ion-grid>
+  <ion-row>
+    <ion-col size="12" size-lg="8">
+      <!-- Cart Items List -->
+      <ion-card>
+        <ion-card-header>
+          <div class="ion-flex ion-justify-content-between ion-align-items-center">
+            <ion-card-title>Shopping Cart</ion-card-title>
+            <ion-badge color="primary">{{ medusaCart?.items?.length }} items</ion-badge>
+          </div>
+        </ion-card-header>
+
+        <ion-card-content class="ion-no-padding">
+          <ion-list>
+            @for (item of medusaCart?.items; track item.id) {
+            <ion-item @fade>
+              <ion-thumbnail slot="start">
+                <img [src]="item?.thumbnail" [alt]="item?.title" (error)="onImageError($event, item)" />
+              </ion-thumbnail>
+
+              <ion-label>
+                <h2>{{ item?.title }}</h2>
+                @if (item.variant?.title) {
+                <p>Variant: {{ item.variant?.title }}</p>
+                }
+                <p class="price-text">{{ item?.unit_price | shortNumber | medusaCurrency: medusaCart.currency_code
+                  }}</p>
+              </ion-label>
+
+              <div class="counter-wrapper" slot="end">
+                <ion-button fill="clear" size="small" class="counter-icon" (click)="decrementItem(item)"
+                  [disabled]="item.quantity <= 1">
+                  <ion-icon name="remove"></ion-icon>
+                </ion-button>
+
+                <div class="counter-value">
+                  <ion-input type="number" [value]="item.quantity" readonly fill="outline">
+                  </ion-input>
+                </div>
+
+                <ion-button fill="clear" size="small" class="counter-icon" (click)="incrementItem(item)">
+                  <ion-icon name="add"></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-button fill="clear" color="danger" slot="end" (click)="delete(item)">
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
+            </ion-item>
+            }
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="12" size-lg="4">
+      <!-- Cart Summary -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Cart Summary</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <!-- Apply Discount -->
+          <div class="ion-margin-bottom">
+            <app-apply-discount></app-apply-discount>
+          </div>
+
+          <!-- Cart Totals -->
+          <ion-list class="ion-no-padding">
+            <ion-item class="total-item">
+              <ion-label>Subtotal:</ion-label>
+              <ion-note slot="end" class="total-amount">
+                {{ medusaCart.subtotal | shortNumber | medusaCurrency: medusaCart.currency_code }}
+              </ion-note>
+            </ion-item>
+
+            @if (medusaCart.discount_total && medusaCart.discount_total > 0) {
+            <ion-item class="total-item">
+              <ion-label>Discount:</ion-label>
+              <ion-note slot="end" color="success">
+                -{{ medusaCart.discount_total | shortNumber | medusaCurrency: medusaCart.currency_code }}
+              </ion-note>
+            </ion-item>
+            }
+
+            @if (medusaCart.tax_total && medusaCart.tax_total > 0) {
+            <ion-item class="total-item">
+              <ion-label>Tax:</ion-label>
+              <ion-note slot="end">
+                {{ medusaCart.tax_total | shortNumber | medusaCurrency: medusaCart.currency_code }}
+              </ion-note>
+            </ion-item>
+            }
+
+            @if (medusaCart.shipping_total && medusaCart.shipping_total > 0) {
+            <ion-item class="total-item">
+              <ion-label>Shipping:</ion-label>
+              <ion-note slot="end">
+                {{ medusaCart.shipping_total | shortNumber | medusaCurrency: medusaCart.currency_code }}
+              </ion-note>
+            </ion-item>
+            }
+
+            <ion-item class="total-item final-total">
+              <ion-label>
+                <h2>Total:</h2>
+              </ion-label>
+              <ion-note slot="end" class="total-amount">
+                <h2>{{ medusaCart.total | shortNumber | medusaCurrency: medusaCart.currency_code }}</h2>
+              </ion-note>
+            </ion-item>
+          </ion-list>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <ion-button expand="block" fill="outline" color="danger" (click)="clearCart()">
+              <ion-icon name="trash" slot="start"></ion-icon>
+              Clear Cart
+            </ion-button>
+
+            <ion-button expand="block" fill="solid" (click)="checkout()">
+              <ion-icon name="card" slot="start"></ion-icon>
+              Proceed to Checkout
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+}
+} @else {
+<!-- No Cart Available -->
+<div class="empty-cart-container ion-text-center ion-padding">
+  <ion-icon name="cart-outline" size="large" color="medium"></ion-icon>
+  <h2>No cart available</h2>
+  <p>Start shopping to create a cart!</p>
+  <ion-button fill="solid" (click)="continueShopping()">
+    <ion-icon name="bag" slot="start"></ion-icon>
+    Start Shopping
+  </ion-button>
+</div>
+}
+}

@@ -1,0 +1,15 @@
+<ion-item>
+  <ion-label position="stacked">Apply Discount Code</ion-label>
+  <ion-input 
+    [(ngModel)]="promoCode" 
+    placeholder="Enter promo code"
+    clearInput="true">
+  </ion-input>
+  <ion-button 
+    slot="end" 
+    fill="clear" 
+    (click)="applyDiscount()"
+    [disabled]="!promoCode.trim()">
+    Apply
+  </ion-button>
+</ion-item> 

@@ -1,0 +1,52 @@
+<ion-toolbar >
+  <ion-segment [scrollable]="true" [value]="vs[0].id" *ngIf="productsCategories$ | async as vs">
+    <ion-segment-button (click)="all()">
+      <ion-label class="segment" >
+        All
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="cat.id" *ngFor="let cat of vs" (click)="navigateSegment(cat)">
+      <ion-label class="segment" >
+        {{ cat.name }}
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+
+<div class="wrap-gallery-info" *ngIf="viewState$ | async as vs">
+  @if (type === 'all') {
+  <div class="element-gallery" *ngFor="let ca of vs.products">
+    <ion-card @fade (click)="detailsPage(ca)" class="wrap-element shadow-2">
+      <div class="thumb-view">
+        <img [src]="ca.images[0].url" />
+      </div>
+      <ion-card-content>
+        <div>
+          <h4 class="ellipsis fs-12 fw-600 spacing1 pdb-2 uppercase">
+            {{ ca.title }}
+          </h4>
+          <p no-margin class="ellipsis fs-12">{{ ca.title }}</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  }
+  @else {
+  <div class="element-gallery" *ngFor="let ca of vs.selectedCategory">
+    <ion-card @fade (click)="detailsPage(ca)" class="wrap-element shadow-2">
+      <div class="thumb-view">
+        <img [src]="ca.images[0].url" />
+      </div>
+      <ion-card-content>
+        <div>
+          <h4 class="ellipsis fs-12 fw-600 spacing1 pdb-2 uppercase">
+            {{ ca.title }}
+          </h4>
+          <p no-margin class="ellipsis fs-12">{{ ca.title }}</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  }
+</div>

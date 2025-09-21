@@ -1,0 +1,63 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="start"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button
+                (click)="addToWishlist()"
+                fill="clear"
+                [color]="isInWishlist() ? 'danger' : 'medium'"
+                [disabled]="isInWishlist()">
+                <ion-icon
+                    [name]="isInWishlist() ? 'heart' : 'heart-outline'"
+                    slot="icon-only">
+                </ion-icon>
+            </ion-button>
+            <app-cart-button></app-cart-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+    <div *ngIf="(viewState$ | async) as vs" class="product-details-container">
+        <ion-grid>
+            <ion-row>
+                <!-- Product Images -->
+                <ion-col size="12" size-lg="7" *ngIf="vs.selectedProduct?.images">
+                    <div class="product-images-section">
+                        <!-- Main Image -->
+                        <div class="main-image-container">
+                            <img [src]="activeImg" alt="Product Image" class="main-product-image" />
+                        </div>
+
+                        <!-- Thumbnail Images -->
+                        <div class="thumbnail-images">
+                            <ion-button
+                                *ngFor="let item of vs.selectedProduct.images"
+                                [class.active-thumb]="activeImg === item.url"
+                                (click)="handleImageActive(item.url)"
+                                fill="clear"
+                                class="thumbnail-button">
+                                <img [src]="item.url" alt="Thumbnail" class="thumbnail-image" />
+                            </ion-button>
+                        </div>
+                    </div>
+                </ion-col>
+
+                <!-- Product Details -->
+                <ion-col size="12" size-lg="5">
+                    <div class="product-details-section">
+                        <app-medusa-product-details-wrapper
+                            [medusaProduct]="vs.selectedProduct">
+                        </app-medusa-product-details-wrapper>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+
+    <app-footer></app-footer>
+
+</ion-content>

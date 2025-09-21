@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Address Step</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" *ngIf="viewState$ | async as vs">
+  <!-- Customer Information -->
+  <ion-card *ngIf="vs.customer">
+    <ion-card-header>
+      <ion-card-title>Customer Information</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Email:</strong> {{ vs.customer.email }}</p>
+      <p><strong>Name:</strong> {{ vs.customer.first_name }} {{ vs.customer.last_name }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Addresses -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Shipping & Billing Addresses</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <app-default-addresses-view [customer]="vs.customer"></app-default-addresses-view>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" (click)="check(vs.customer)">Next</ion-button>
+</ion-content>

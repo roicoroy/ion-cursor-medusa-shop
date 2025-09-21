@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="defaultHref"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Manage Customer Address
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="small">
+        Manage Customer Address
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <form [formGroup]="customerAddressForm" [ngxsForm]="formPath">
+    <ion-col>
+      <p>Address</p>
+      <app-customer-address-form formControlName="address" [touched]="customerAddressForm.get('address')!.touched">
+      </app-customer-address-form>
+    </ion-col>
+    <ion-item>
+      <ion-buttons slot="start">
+        <ion-button fill="solid" color="primary" type="submit" (click)="onSubmit()">
+          {{ 'Add' | translate }}
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="start">
+        <ion-button fill="solid" color="secondary" type="button" (click)="onReset()">
+          {{ 'Reset' | translate }}
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </form>
+</ion-content>

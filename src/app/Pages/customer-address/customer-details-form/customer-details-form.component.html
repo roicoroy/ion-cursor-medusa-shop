@@ -1,0 +1,25 @@
+<form [formGroup]="customerDetailsForm">
+    <ion-item class="bdra-30 shadow-1 bg-light">
+        <ion-input [required]="true" type="text" [clearInput]="true" labelPlacement="floating"
+            autocapitalize="off" formControlName="first_name" label="Enter your first name"></ion-input>
+    </ion-item>
+    <ion-item class="bdra-30 shadow-1 bg-light">
+        <ion-input [required]="true" type="text" [clearInput]="true" inputmode="text" labelPlacement="floating"
+            autocapitalize="off" formControlName="last_name" label="Enter your last name"></ion-input>
+    </ion-item>
+    <ion-item class="bdra-30 shadow-1 bg-light">
+        <ion-input [required]="true" type="phone" placeholder="phone" formControlName="phone" [clearInput]="true"
+            autocapitalize="off" inputmode="phone">
+        </ion-input>
+    </ion-item>
+    <ion-item class="bdra-30 shadow-1 bg-light">
+        <ion-input [required]="true" type="text" placeholder="Company's Name" formControlName="company_name" clearInput
+            autocapitalize="off" inputmode="text">
+        </ion-input>
+    </ion-item>
+    <ion-col>
+        <ion-button (click)="submit()" [disabled]="!customerDetailsForm.valid" mode="ios" expand="block" shape="round">
+            Update Details
+        </ion-button>
+    </ion-col>
+</form>

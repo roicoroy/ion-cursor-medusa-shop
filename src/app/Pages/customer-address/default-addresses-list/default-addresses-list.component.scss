@@ -1,0 +1,81 @@
+// Address List Styles
+ion-card {
+  margin: 0.5rem 0;
+  transition: all 0.3s ease;
+
+  ion-item {
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+  }
+
+  ion-card-content {
+    padding: 1rem;
+  }
+}
+
+// Button transitions for smooth color changes
+ion-button {
+  transition: all 0.3s ease;
+
+  &[color="success"] {
+    --background: var(--ion-color-success);
+    --color: var(--ion-color-success-contrast);
+  }
+
+  &[color="medium"] {
+    --background: var(--ion-color-medium);
+    --color: var(--ion-color-medium-contrast);
+  }
+
+  ion-icon {
+    margin-right: 0.5rem;
+  }
+}
+
+// Prevent layout shifts
+ion-grid {
+  ion-row {
+    margin: 0;
+
+    ion-col {
+      padding: 0.25rem;
+    }
+  }
+}
+
+// Address view container
+app-address-view {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+// Action buttons
+ion-buttons {
+  ion-button {
+    --color: var(--ion-color-primary);
+    font-size: 0.875rem;
+
+    &:hover {
+      --background: var(--ion-color-primary-tint);
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  ion-card {
+    margin: 0.25rem 0;
+
+    ion-card-content {
+      padding: 0.75rem;
+    }
+  }
+
+  ion-button {
+    font-size: 0.8rem;
+
+    ion-icon {
+      margin-right: 0.25rem;
+    }
+  }
+}

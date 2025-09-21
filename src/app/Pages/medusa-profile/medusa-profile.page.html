@@ -1,0 +1,233 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Loading State -->
+  @if ((viewState$ | async)?.isLoggedIn === false) {
+  <div class="login-prompt">
+    <div class="login-prompt-content">
+      <h2>Please Log In</h2>
+      <p>You need to be logged in to view your profile.</p>
+      <ion-button (click)="openLogin()" expand="block" fill="solid">
+        <ion-icon name="log-in-outline" slot="start"></ion-icon>
+        Log In
+      </ion-button>
+      <ion-button (click)="testLogin()" expand="block" fill="outline" class="ion-margin-top">
+        <ion-icon name="construct-outline" slot="start"></ion-icon>
+        Test Login (Debug)
+      </ion-button>
+    </div>
+  </div>
+  }
+
+  <!-- Profile Content -->
+  @if ((viewState$ | async)?.isLoggedIn) {
+  <div class="ion-padding">
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="ion-flex ion-align-items-center ion-justify-content-between">
+        <div class="ion-flex ion-align-items-center">
+          <ion-avatar class="profile-avatar">
+            <img src="/assets/img/users/user-10.jpg" alt="Profile">
+          </ion-avatar>
+          <div class="ion-margin-start">
+            <h2 class="ion-no-margin">
+              Welcome {{ (viewState$ | async)?.customer?.first_name || 'Guest' }} {{ (viewState$ | async)?.customer?.last_name || '' }}!
+            </h2>
+            <p class="ion-no-margin ion-color-medium">{{ (viewState$ | async)?.customer?.email || 'Not available' }}</p>
+          </div>
+        </div>
+        <ion-button (click)="logout()" fill="clear" color="danger">
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          Logout
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <ion-grid class="stats-grid">
+      <ion-row>
+        <ion-col size="6" size-md="3">
+          <div class="stat-item" (click)="onTabButtonPressed('nav-order-tab')">
+            <ion-icon name="bag-outline" class="stat-icon"></ion-icon>
+            <div class="stat-content">
+              <h3>5</h3>
+              <p>Orders</p>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col size="6" size-md="3">
+          <div class="stat-item" (click)="wishlist()">
+            <ion-icon name="heart-outline" class="stat-icon"></ion-icon>
+            <div class="stat-content">
+              <h3>10</h3>
+              <p>Wishlist</p>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col size="6" size-md="3">
+          <div class="stat-item" (click)="returns()">
+            <ion-icon name="return-up-back-outline" class="stat-icon"></ion-icon>
+            <div class="stat-content">
+              <h3>3</h3>
+              <p>Returns</p>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col size="6" size-md="3">
+          <div class="stat-item">
+            <ion-icon name="gift-outline" class="stat-icon"></ion-icon>
+            <div class="stat-content">
+              <h3>7</h3>
+              <p>Gift Cards</p>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- Navigation Tabs -->
+    <ion-segment [(ngModel)]="selectedTab" (ionChange)="onSegmentChange($event)" scrollable class="profile-segment">
+      @for(item of tabsListSignal(); track item.id){
+      <ion-segment-button [value]="item.id">
+        <ion-label>{{ item.button }}</ion-label>
+      </ion-segment-button>
+      }
+    </ion-segment>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+      @for (item of tabsListSignal(); track item.id) {
+        @if(item.active){
+        @switch (item.id) {
+        @case ('nav-profile-tab') {
+        <div class="content-section">
+          <h3>Profile Overview</h3>
+          <p>Welcome to your profile dashboard. Here you can manage your account settings, view your orders, and update your information.</p>
+        </div>
+        }
+        @case ("nav-information-tab") {
+        @if (viewState$ | async; as vs) {
+        <div class="content-section">
+          <h3>Personal Details</h3>
+          <app-customer-details-form [modal]='modal' [customer]="vs.customer || null"></app-customer-details-form>
+        </div>
+        }
+        }
+        @case ("nav-address-tab"){
+        @if (viewState$ | async; as vs) {
+        <div class="content-section">
+          <h3>Address Management</h3>
+
+          <div class="action-buttons">
+            <ion-button (click)="addNewAddress()" expand="block" fill="solid">
+              <ion-icon name="add-outline" slot="start"></ion-icon>
+              Add New Address
+            </ion-button>
+            <ion-button (click)="openAccountDetails()" expand="block" fill="outline" class="ion-margin-top">
+              <ion-icon name="person-outline" slot="start"></ion-icon>
+              Account Details
+            </ion-button>
+          </div>
+
+          <div class="address-section">
+            <h4>Your Addresses</h4>
+            <app-default-addresses-list [customer]="vs.customer"></app-default-addresses-list>
+            <app-default-addresses-view [customer]="vs.customer"></app-default-addresses-view>
+          </div>
+        </div>
+        }
+        }
+        @case ("nav-order-tab"){
+        <div class="content-section">
+          <h3>Order History</h3>
+          <ion-list class="order-list">
+            <ion-item>
+              <ion-label>
+                <h4>Order #2245</h4>
+                <p>How can i share ?</p>
+              </ion-label>
+              <ion-chip color="warning" slot="end">Pending</ion-chip>
+              <ion-button fill="clear" slot="end">
+                <ion-icon name="document-text-outline"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-list>
+        </div>
+        }
+        @case ("nav-notification-tab"){
+        <div class="content-section">
+          <h3>Notification Settings</h3>
+          <p class="section-description">Stay up to date with activity that involves you</p>
+
+          <ion-list class="notification-list">
+            <ion-item>
+              <ion-label>Like & Follows Notifications</ion-label>
+              <ion-toggle checked slot="end"></ion-toggle>
+            </ion-item>
+            <ion-item>
+              <ion-label>Post, Comments & Replies Notifications</ion-label>
+              <ion-toggle checked slot="end"></ion-toggle>
+            </ion-item>
+            <ion-item>
+              <ion-label>New Product Notifications</ion-label>
+              <ion-toggle checked slot="end"></ion-toggle>
+            </ion-item>
+          </ion-list>
+        </div>
+        }
+        @case ("nav-password-tab"){
+        <div class="content-section">
+          <h3>Change Password</h3>
+
+          <form class="password-form">
+            <ion-item>
+              <ion-label position="stacked">Old Password</ion-label>
+              <ion-input type="password" name="old_pass"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">New Password</ion-label>
+              <ion-input type="password" name="new_pass"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Confirm Password</ion-label>
+              <ion-input type="password" name="con_new_pass"></ion-input>
+            </ion-item>
+            <ion-button expand="block" type="submit" class="ion-margin-top">
+              Update Password
+            </ion-button>
+          </form>
+        </div>
+        }
+        }
+        }
+      }
+    </div>
+  </div>
+  }
+
+  <app-footer [style_3]="false"></app-footer>
+
+  @if (viewState$ | async; as vs) {
+  <ion-modal #accountModal id="account-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">
+              Dismiss
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <app-customer-details-form [modal]='modal' [customer]="vs.customer"></app-customer-details-form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  }
+
+</ion-content>

@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Order Reviews
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button *ngIf="order?.status === 'completed'" (click)="home()">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+      <ion-back-button *ngIf="order?.status !== 'completed'" [defaultHref]="fromPayment ? 'welcome' : 'manage-orders' "></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">
+        Order Review
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  @if(order){
+
+  <!-- Order Summary -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Order #{{ order.display_id }}</ion-card-title>
+      <ion-badge [color]="getStatusColor(order.status)">
+        {{ order.status }}
+      </ion-badge>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Total:</strong> {{ order.total | medusaCurrency:order.currency_code }}</p>
+      <p><strong>Date:</strong> {{ order.created_at | date:'medium' }}</p>
+      <p><strong>Status:</strong> {{ order.status }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Return Button -->
+  <ion-card *ngIf="canCreateReturn(order.status)">
+    <ion-card-content>
+      <ion-button expand="block" (click)="createReturn()" fill="outline">
+        <ion-icon name="return-down-back" slot="start"></ion-icon>
+        Create Return
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Order Items -->
+  <ion-card *ngFor="let product of order?.items; let i = index">
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="4">
+          <ion-img [src]="product?.thumbnail" (ionError)="onImageError($event)"></ion-img>
+        </ion-col>
+        <ion-col size="8">
+          <ion-text>
+            {{ product?.title }}
+          </ion-text> <br>
+          <ion-text>
+            {{ product?.subtitle }}
+          </ion-text> <br>
+          <ion-text>
+            {{ product?.unit_price | shortNumber | medusaCurrency:this.order.currency_code }}
+          </ion-text> <br>
+          <ion-text color="primary">
+            {{ product?.variant_sku }}
+          </ion-text>
+          <p>
+            {{ product.product_description }}
+          </p>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  }
+
+</ion-content>

@@ -1,0 +1,79 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon color="dark" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+    </ion-toolbar>
+  </ion-header>
+  <div class="wrap-login-v4 offset-top-obj">
+    <div class="wrap-interval">
+      <form [formGroup]="loginForm" class="" novalidate>
+        <div class="wrap-pst">
+          <div class="main-form">
+            <div class="brand">
+              <img class="parallax-obj parallax-down-obj" src="assets/goiaba.png">
+
+              <h2 class="txt-light fs-40 spacing1 ion-no-margin">Sign In</h2>
+            </div>
+            <br />
+            <ion-item class="bdra-30 shadow-1 bg-light">
+              <ion-input type="'email'" placeholder="Email" formControlName="email" clearInput autocapitalize="off"
+                inputmode="email">
+              </ion-input>
+            </ion-item>
+            <ng-container *ngFor="let validation of validation_messages.email">
+              <div class="error-message"
+                *ngIf="loginForm.get('email')?.hasError(validation.type) && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <span>{{ validation.message }}</span>
+              </div>
+            </ng-container>
+
+            <ion-item lines="none" class="bdra-30 mgt-10 shadow-1 bg-light">
+              <app-show-hide-password>
+                <ion-input type="password" placeholder="Password" formControlName="password" clearInput></ion-input>
+              </app-show-hide-password>
+            </ion-item>
+
+            <ng-container *ngFor="let validation of validation_messages.password">
+              <div class="error-message"
+                *ngIf="loginForm.get('password')?.hasError(validation.type) && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <span>{{ validation.message }}</span>
+              </div>
+            </ng-container>
+
+            <hr />
+            <div class="ion-text-right">
+              <ion-button mode="ios" size="small" fill="solid" class="txt-light" type="button">
+                Forgot Password?
+              </ion-button>
+            </div>
+          </div>
+          <div class="bg-img parallax-obj parallax-up-obj">
+            <img src="assets/images/lemon15.jpg">
+          </div>
+        </div>
+        <div class="ion-text-center bottom-form pdl-50 pdr-50">
+          <br />
+          <hr />
+          <ion-button [disabled]="!loginForm.valid || loading" (click)="doLogin()" mode="ios" expand="block" shape="round"
+            color="primary" class="txt1 spacing2 fw-600">
+            <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+            <span *ngIf="!loading">Login</span>
+          </ion-button>
+          <hr />
+          <p>New Member? <ion-button mode="ios" fill="clear" size="small" class="mgt--10">Sign up</ion-button></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content> 

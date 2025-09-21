@@ -1,0 +1,160 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="customer-orders"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add New Address</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onCancel()" fill="clear">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Add New Address</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+    <div class="form-container">
+      
+      <!-- First Name -->
+      <ion-item class="form-item">
+        <ion-label position="floating">First Name *</ion-label>
+        <ion-input 
+          formControlName="first_name" 
+          type="text" 
+          placeholder="Enter your first name"
+          [clearInput]="true">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="isFieldInvalid('first_name')">
+        {{ getFieldError('first_name') }}
+      </div>
+
+      <!-- Last Name -->
+      <ion-item class="form-item">
+        <ion-label position="floating">Last Name *</ion-label>
+        <ion-input 
+          formControlName="last_name" 
+          type="text" 
+          placeholder="Enter your last name"
+          [clearInput]="true">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="isFieldInvalid('last_name')">
+        {{ getFieldError('last_name') }}
+      </div>
+
+      <!-- Address Line 1 -->
+      <ion-item class="form-item">
+        <ion-label position="floating">Address Line 1 *</ion-label>
+        <ion-input 
+          formControlName="address_1" 
+          type="text" 
+          placeholder="Enter your street address"
+          [clearInput]="true">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="isFieldInvalid('address_1')">
+        {{ getFieldError('address_1') }}
+      </div>
+
+      <!-- Address Line 2 -->
+      <ion-item class="form-item">
+        <ion-label position="floating">Address Line 2</ion-label>
+        <ion-input 
+          formControlName="address_2" 
+          type="text" 
+          placeholder="Apartment, suite, etc. (optional)"
+          [clearInput]="true">
+        </ion-input>
+      </ion-item>
+
+      <!-- City -->
+      <ion-item class="form-item">
+        <ion-label position="floating">City *</ion-label>
+        <ion-input 
+          formControlName="city" 
+          type="text" 
+          placeholder="Enter your city"
+          [clearInput]="true">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="isFieldInvalid('city')">
+        {{ getFieldError('city') }}
+      </div>
+
+      <!-- Country -->
+      <ion-item class="form-item">
+        <ion-label position="floating">Country *</ion-label>
+        <ion-select formControlName="country_code" placeholder="Select your country">
+          <ion-select-option 
+            *ngFor="let country of getCountryOptions()" 
+            [value]="country.code">
+            {{ country.name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div class="error-message" *ngIf="isFieldInvalid('country_code')">
+        {{ getFieldError('country_code') }}
+      </div>
+
+      <!-- Postal Code -->
+      <ion-item class="form-item">
+        <ion-label position="floating">Postal Code *</ion-label>
+        <ion-input 
+          formControlName="postal_code" 
+          type="text" 
+          placeholder="Enter your postal code"
+          [clearInput]="true">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="isFieldInvalid('postal_code')">
+        {{ getFieldError('postal_code') }}
+      </div>
+
+      <!-- Phone -->
+      <ion-item class="form-item">
+        <ion-label position="floating">Phone Number *</ion-label>
+        <ion-input 
+          formControlName="phone" 
+          type="tel" 
+          placeholder="Enter your phone number"
+          [clearInput]="true">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="isFieldInvalid('phone')">
+        {{ getFieldError('phone') }}
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <ion-button 
+          type="submit" 
+          expand="block" 
+          fill="solid" 
+          [disabled]="loading"
+          class="submit-button">
+          <ion-icon name="add" slot="start"></ion-icon>
+          {{ loading ? 'Adding Address...' : 'Add Address' }}
+        </ion-button>
+
+        <ion-button 
+          type="button" 
+          expand="block" 
+          fill="outline" 
+          (click)="onCancel()"
+          class="cancel-button">
+          <ion-icon name="close" slot="start"></ion-icon>
+          Cancel
+        </ion-button>
+      </div>
+
+    </div>
+  </form>
+</ion-content> 

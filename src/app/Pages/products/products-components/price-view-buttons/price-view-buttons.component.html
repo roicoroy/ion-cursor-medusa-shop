@@ -1,0 +1,10 @@
+<div class="tp-sidebar-widget">
+    <div class="tp-sidebar-widget-content tagcloud">
+        <h3 class="ion-no=margin tp-sidebar-widget-title">Price List</h3>
+        <a *ngFor="let variant of variants; let i = index" (click)="addToCartButton(variant)">
+            {{ variant.title }} /
+            {{ variant.calculated_price?.calculated_amount | shortNumber | medusaCurrency:
+            variant.calculated_price?.currency_code }}
+        </a>
+    </div>
+</div>

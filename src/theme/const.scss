@@ -1,0 +1,19 @@
+@use "sass:math";
+
+$label:14px;
+$grid: 8px;
+$grid2: $grid * 2;
+$grid3: $grid * 3;
+$grid4: $grid * 4;
+$grid5: $grid * 5;
+$grid6: $grid * 6;
+$grid7: $grid * 7;
+$grid8: $grid * 8;
+$grid9: $grid * 9;
+$grid10: $grid * 10;
+$grid30: $grid * 30;
+$grid31: $grid * 31;
+$grid32: $grid * 32;
+$grid33: $grid * 33;
+$halfGrid: math.div($grid, 2);
+$gridAndHalf: $grid + $halfGrid;

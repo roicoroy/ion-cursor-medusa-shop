@@ -1,0 +1,6 @@
+<ion-button fill="solid" *ngIf="medusaCart$ | async as medusaCart" (click)="navigateToCart()">
+    <ion-badge *ngIf="getItemCount(medusaCart) > 0" color="primary" mode="ios">
+        {{ getItemCount(medusaCart) }}
+    </ion-badge>
+    <ion-icon name="cart"></ion-icon>
+</ion-button>

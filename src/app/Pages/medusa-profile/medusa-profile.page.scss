@@ -1,0 +1,248 @@
+// Login prompt styles
+.login-prompt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    padding: 2rem;
+}
+
+.login-prompt-content {
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-prompt-content h2 {
+    margin-bottom: 1rem;
+    color: var(--ion-color-primary);
+}
+
+.login-prompt-content p {
+    margin-bottom: 2rem;
+    color: var(--ion-color-medium);
+}
+
+// Profile header styles
+.profile-header {
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--ion-color-light-shade);
+}
+
+.profile-avatar {
+    width: 60px;
+    height: 60px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+// Stats grid styles
+.stats-grid {
+    margin-bottom: 1.5rem;
+    padding: 0;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid var(--ion-color-light-shade);
+
+    &:hover {
+        background: var(--ion-color-primary-tint);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-icon {
+        font-size: 2rem;
+        color: var(--ion-color-primary);
+        margin-right: 1rem;
+        min-width: 2rem;
+    }
+
+    .stat-content {
+        h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--ion-color-primary);
+        }
+
+        p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--ion-color-medium);
+        }
+    }
+}
+
+// Segment styles
+.profile-segment {
+    margin: 1.5rem 0;
+    background: var(--ion-color-light);
+    border-radius: 12px;
+
+    ion-segment-button {
+        --color: var(--ion-color-medium);
+        --color-checked: var(--ion-color-primary);
+        --background-checked: var(--ion-color-primary-tint);
+
+        ion-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+    }
+}
+
+// Content sections
+.tab-content {
+    margin-top: 1rem;
+}
+
+.content-section {
+    margin-bottom: 2rem;
+
+    h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--ion-color-dark);
+        margin-bottom: 1rem;
+    }
+
+    h4 {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--ion-color-dark);
+        margin: 1.5rem 0 1rem 0;
+    }
+
+    .section-description {
+        color: var(--ion-color-medium);
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+// Action buttons
+.action-buttons {
+    margin-bottom: 2rem;
+
+    ion-button {
+        margin: 0.25rem 0;
+    }
+}
+
+// Address section
+.address-section {
+    margin-top: 1.5rem;
+}
+
+// List styles
+.order-list,
+.notification-list {
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    margin: 1rem 0;
+
+    ion-item {
+        --background: transparent;
+        --padding-start: 1rem;
+        --padding-end: 1rem;
+        --border-color: var(--ion-color-light-shade);
+
+        ion-label {
+            h4 {
+                margin: 0;
+                font-size: 1rem;
+                font-weight: 500;
+                color: var(--ion-color-dark);
+            }
+
+            p {
+                margin: 0.25rem 0 0 0;
+                font-size: 0.9rem;
+                color: var(--ion-color-medium);
+            }
+        }
+    }
+}
+
+// Form styles
+.password-form {
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+
+    ion-item {
+        --background: transparent;
+        --padding-start: 0;
+        --padding-end: 0;
+        margin-bottom: 1rem;
+        --border-color: var(--ion-color-light-shade);
+
+        ion-label {
+            font-weight: 500;
+            color: var(--ion-color-dark);
+        }
+
+        ion-input {
+            --padding-start: 0;
+        }
+    }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .profile-header {
+        padding: 1rem;
+
+        .ion-flex {
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 1rem;
+        }
+    }
+
+    .profile-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .stat-item {
+        padding: 0.75rem;
+
+        .stat-icon {
+            font-size: 1.5rem;
+        }
+
+        .stat-content {
+            h3 {
+                font-size: 1.2rem;
+            }
+
+            p {
+                font-size: 0.8rem;
+            }
+        }
+    }
+
+    .content-section {
+        h3 {
+            font-size: 1.1rem;
+        }
+    }
+}

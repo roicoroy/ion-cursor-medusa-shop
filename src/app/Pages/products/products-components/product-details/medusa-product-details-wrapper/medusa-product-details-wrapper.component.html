@@ -1,0 +1,33 @@
+<div class="product-details-wrapper" *ngIf="hasProductData()">
+  <!-- Product Category -->
+  <div class="product-category" *ngIf="medusaProduct?.subtitle">
+    <ion-chip color="primary" outline>{{ medusaProduct!.subtitle }}</ion-chip>
+  </div>
+
+  <!-- Product Title -->
+  <h1 class="product-title" *ngIf="medusaProduct?.title">{{ medusaProduct!.title }}</h1>
+
+  <!-- Product Description -->
+  <div class="product-description" *ngIf="medusaProduct?.description">
+    <p [class.expanded]="textMore">{{ medusaProduct!.description }}</p>
+    <ion-button fill="clear" size="small" (click)="handleTextToggle()">
+      <ion-icon [name]="textMore ? 'chevron-up' : 'chevron-down'" slot="start"></ion-icon>
+      {{ textMore ? 'See less' : 'See more' }}
+    </ion-button>
+  </div>
+
+  <!-- Product Variations -->
+  <div class="product-variations" *ngIf="medusaProduct?.variants">
+    <h3>Available Options</h3>
+    <app-price-view
+      [variants]="medusaProduct!.variants"
+      [product]="medusaProduct!">
+    </app-price-view>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div *ngIf="!hasProductData()" class="loading-container ion-text-center ion-padding">
+  <ion-spinner name="crescent"></ion-spinner>
+  <p class="ion-margin-top">Loading product details...</p>
+</div>

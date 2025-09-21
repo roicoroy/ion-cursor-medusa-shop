@@ -1,0 +1,178 @@
+@use "src/theme/const.scss";
+@forward "swiper/css/bundle";
+@forward "bootstrap/dist/css/bootstrap.css";
+@forward './assets/css/font-awesome-pro.css';
+@forward './assets/css/flaticon_shofy.css';
+@forward './assets/css/animate.css';
+@forward './assets/scss/main.scss';
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+// @import "@ionic/angular/css/palettes/dark.always.css";
+@import "@ionic/angular/css/palettes/dark.class.css";
+// @import '@ionic/angular/css/palettes/dark.system.css';
+
+@import url("./assets/fonts/montserrat/Montserrat.css");
+
+@import url("./assets/fonts/mouse-memoirs/MouseMemoirs.css");
+
+@import url("node_modules/ngx-lightbox/lightbox.css");
+
+/* Portrait */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {}
+
+/* Portrait */
+// iphone 5s
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+    ion-menu {
+        // top: 2%;
+    }
+
+    ion-content {
+        top: 0%;
+    }
+}
+
+// ion-modal::part(backdrop) {
+//     background: var(--ion-color-primary);
+//     opacity: 1;
+// }
+
+// .error-message {
+//     color: var(--ion-color-danger);
+//     font-size: smaller;
+
+//     ion-icon {
+//         width: $grid2;
+//         height: $grid2;
+//     }
+// }
+
+// * {
+//     font-family: Montserrat, "Open Sans", Helvetica, Arial, sans-serif;
+// }
+
+// ion-label {
+//     font-size: $grid2 !important;
+// }
+
+// ion-label.segment {
+//     font-size: $grid3 !important;
+// }
+
+// // ion-segment-button::part(indicator-background) {
+// //     // background-color: var(--ion-color-secondary);
+// // }
+
+// ion-label.name {
+//     font-family: MouseMemoirs !important;
+//     font-size: $grid4 !important;
+// }
+
+// ion-title {
+//     font-family: MouseMemoirs, "Open Sans", Helvetica, Arial, sans-serif;
+//     font-size: $grid3;
+//     ;
+// }
+
+// ion-text {
+//     font-family: MouseMemoirs, "Open Sans", Helvetica, Arial, sans-serif !important;
+//     font-size: $grid3 !important;
+// }
+
+// ion-note {
+//     font-family: MouseMemoirs, "Open Sans", Helvetica, Arial, sans-serif !important;
+//     font-size: $grid2 !important;
+// }
+
+// ion-avatar {
+//     width: $grid6;
+//     height: $grid6;
+// }
+
+// ion-icon {
+//     width: $grid4;
+//     height: $grid4;
+// }
+
+// ion-icon.menu-icon {
+//     width: $grid5;
+//     height: $grid5;
+// }
+
+// ion-menu::part(backdrop) {
+//     background-color: var(--ion-color-primary);
+// }
+
+// ion-tab-bar {
+//     height: $grid10;
+// }
+
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//     font-family: MouseMemoirs !important;
+// }
+
+// .bold {
+//     font-weight: 900;
+//     color: var(--ion-color-dark);
+// }
+
+// .brittish-blue {
+//     background-color: #012169;
+// }
+
+// .brazil-green {
+//     background-color: aqua;
+//     color: pink;
+// }
+
+// .emoji-icon i {
+//     font-size: $grid5;
+// }
+
+// .tabs-title {
+//     font-size: $grid2;
+// }
+
+// ion-modal#payment-modal {
+//     --width: 350px;
+//     --min-width: 250px;
+//     --height: 30rem;
+//     --border-radius: 6px;
+//     --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+// }
+
+// ion-modal#payment-modal h1 {
+//     margin: 20px 20px 10px 20px;
+// }
+
+// ion-modal#payment-modal ion-icon {
+//     margin-right: 6px;
+//     width: 48px;
+//     height: 48px;
+//     padding: 4px 0;
+//     color: #aaaaaa;
+// }
+
+// ion-modal#payment-modal .wrapper {
+//     margin-bottom: 10px;
+// }

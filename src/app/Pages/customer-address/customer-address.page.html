@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Customer Address</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="customer-address-content">
+          <h2>Manage Addresses</h2>
+          
+          <ion-button (click)="addNewAddress()" expand="block" fill="solid" class="mb-3">
+            <ion-icon name="add" slot="start"></ion-icon>
+            Add New Address
+          </ion-button>
+
+          <div *ngIf="viewState$ | async as vs; else loading">
+            <app-default-addresses-list [customer]="vs.customer || null"></app-default-addresses-list>
+            <app-default-addresses-view [customer]="vs.customer || null"></app-default-addresses-view>
+          </div>
+          
+          <ng-template #loading>
+            <div class="loading-container">
+              <ion-spinner name="crescent"></ion-spinner>
+              <p>Loading addresses...</p>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

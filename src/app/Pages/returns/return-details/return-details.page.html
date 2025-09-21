@@ -1,0 +1,116 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/returns"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Return Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+    <!-- Loading State -->
+    <div *ngIf="loading$ | async" class="ion-text-center ion-padding">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Loading return details...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error$ | async as error" class="ion-text-center ion-padding">
+      <ion-icon name="alert-circle" color="danger" size="large"></ion-icon>
+      <p>{{ error }}</p>
+      <ion-button (click)="goBack()" fill="outline">
+        Go Back
+      </ion-button>
+    </div>
+
+    <!-- Return Details -->
+    <div *ngIf="!(loading$ | async) && !(error$ | async) && (return$ | async) as returnItem">
+      <!-- Header Card -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Return #{{ returnItem.display_id }}</ion-card-title>
+          <ion-badge [color]="getStatusColor(returnItem.status)" class="status-badge">
+            {{ getStatusText(returnItem.status) }}
+          </ion-badge>
+        </ion-card-header>
+        <ion-card-content>
+          <p><strong>Order ID:</strong> {{ returnItem.order_id }}</p>
+          <p><strong>Created:</strong> {{ returnItem.created_at | date:'medium' }}</p>
+          <p *ngIf="returnItem.refund_amount">
+            <strong>Refund Amount:</strong> {{ returnItem.refund_amount | medusaCurrency }}
+          </p>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Items Card -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Returned Items</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item *ngFor="let returnItem of returnItem.items" class="return-item">
+              <ion-thumbnail slot="start">
+                <ion-img [src]="returnItem.item?.thumbnail || 'assets/images/placeholder-product.jpg'"
+                         (ionError)="$event.target.src = 'assets/images/placeholder-product.jpg'">
+                </ion-img>
+              </ion-thumbnail>
+              
+              <ion-label>
+                <h3>{{ returnItem.item?.title || 'Product' }}</h3>
+                <p>{{ returnItem.item?.variant_title || 'Variant' }}</p>
+                <p><strong>Quantity:</strong> {{ returnItem.quantity }}</p>
+                <p *ngIf="returnItem.item?.unit_price">
+                  <strong>Price:</strong> {{ returnItem.item.unit_price | medusaCurrency }}
+                </p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Timeline Card -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Return Timeline</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="timeline">
+            <div *ngFor="let item of getTimelineItems(returnItem); let i = index" 
+                 class="timeline-item"
+                 [class.last]="i === getTimelineItems(returnItem).length - 1">
+              <div class="timeline-icon" [style.color]="item.color">
+                <ion-icon [name]="item.icon"></ion-icon>
+              </div>
+              <div class="timeline-content">
+                <h4>{{ item.title }}</h4>
+                <p>{{ item.description }}</p>
+                <small>{{ item.date | date:'medium' }}</small>
+              </div>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Shipping Methods Card -->
+      <ion-card *ngIf="returnItem.shipping_methods && returnItem.shipping_methods.length > 0">
+        <ion-card-header>
+          <ion-card-title>Shipping Methods</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item *ngFor="let method of returnItem.shipping_methods">
+              <ion-label>
+                <h3>{{ method.shipping_option?.name || 'Shipping Method' }}</h3>
+                <p *ngIf="method.shipping_option?.price_type === 'flat_rate'">
+                  Flat Rate: {{ method.shipping_option?.price | medusaCurrency }}
+                </p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content> 

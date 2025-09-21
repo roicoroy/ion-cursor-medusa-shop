@@ -1,0 +1,158 @@
+<!-- Login Button -->
+<div class="ion-padding-bottom">
+  <ion-button expand="block" (click)="openLoginModal()" fill="outline">
+    <ion-icon name="log-in-outline" slot="start"></ion-icon>
+    Login
+  </ion-button>
+</div>
+
+<!-- Products Section -->
+<div class="products-container">
+  <!-- View Toggle -->
+  <div class="view-toggle ion-margin-bottom">
+    <ion-segment [(ngModel)]="viewMode" (ionChange)="onViewModeChange($event)">
+      <ion-segment-button value="grid">
+        <ion-icon name="grid-outline"></ion-icon>
+        <ion-label>Grid</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="list">
+        <ion-icon name="list-outline"></ion-icon>
+        <ion-label>List</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <!-- Grid View -->
+  <div *ngIf="viewMode === 'grid'">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let product of products$ | async">
+          <ion-card class="product-card" button (click)="detailsPage(product)">
+            <!-- Product Badge -->
+            <div class="product-badges" *ngIf="product.tags?.length">
+              <ion-badge color="danger" *ngIf="product.tags?.includes('hot')">Hot</ion-badge>
+              <ion-badge color="warning" *ngIf="product.tags?.includes('trending')">Trending</ion-badge>
+              <ion-badge color="success" *ngIf="product.tags?.includes('offer')">Offer</ion-badge>
+            </div>
+
+            <!-- Product Image -->
+            <div class="product-image-container">
+              <img [src]="product.thumbnail || (product.images?.[0]?.url || 'assets/placeholder-product.png')"
+                   [alt]="product.title" class="product-image">
+
+              <!-- Quick Actions -->
+              <div class="product-actions">
+                <ion-button fill="clear" size="small" (click)="quickView(product, $event)">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </ion-button>
+                <ion-button
+                  fill="clear"
+                  size="small"
+                  [color]="isInWishlist(product) ? 'danger' : 'medium'"
+                  (click)="addToWishlist(product, $event)">
+                  <ion-icon [name]="isInWishlist(product) ? 'heart' : 'heart-outline'"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+
+            <!-- Product Content -->
+            <ion-card-content>
+              <!-- Category -->
+              <p class="product-category" *ngIf="product.collection?.title">
+                {{ product.collection.title }}
+              </p>
+
+              <!-- Title -->
+              <h3 class="product-title">{{ product.title }}</h3>
+
+              <!-- Rating -->
+              <div class="product-rating ion-flex ion-align-items-center ion-justify-content-center">
+                <div class="rating-stars">
+                  <ion-icon name="star" color="warning"></ion-icon>
+                  <ion-icon name="star" color="warning"></ion-icon>
+                  <ion-icon name="star" color="warning"></ion-icon>
+                  <ion-icon name="star" color="warning"></ion-icon>
+                  <ion-icon name="star" color="warning"></ion-icon>
+                </div>
+                <span class="rating-text">(4.5)</span>
+              </div>
+
+              <!-- Price -->
+              <div class="product-price">
+                <span class="current-price" *ngIf="product.variants?.[0]?.prices?.[0]?.amount">
+                  {{ (product.variants[0].prices[0].amount / 100) | medusaCurrency }}
+                </span>
+                <span class="old-price" *ngIf="product.variants?.[0]?.prices?.[1]?.amount">
+                  {{ (product.variants[0].prices[1].amount / 100) | medusaCurrency }}
+                </span>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- List View -->
+  <div *ngIf="viewMode === 'list'">
+    <ion-list>
+      <ion-card *ngFor="let product of products$ | async" class="product-list-card">
+        <ion-item button (click)="detailsPage(product)">
+          <ion-thumbnail slot="start" class="product-thumbnail">
+            <img [src]="product.thumbnail || (product.images?.[0]?.url || 'assets/placeholder-product.png')"
+                 [alt]="product.title">
+          </ion-thumbnail>
+
+          <ion-label>
+            <div class="product-list-content">
+              <!-- Category -->
+              <p class="product-category" *ngIf="product.collection?.title">
+                {{ product.collection.title }}
+              </p>
+
+              <!-- Title -->
+              <h2 class="product-title">{{ product.title }}</h2>
+
+              <!-- Rating -->
+              <div class="product-rating ion-flex ion-align-items-center">
+                <div class="rating-stars">
+                  <ion-icon name="star" color="warning" size="small"></ion-icon>
+                  <ion-icon name="star" color="warning" size="small"></ion-icon>
+                  <ion-icon name="star" color="warning" size="small"></ion-icon>
+                  <ion-icon name="star" color="warning" size="small"></ion-icon>
+                  <ion-icon name="star" color="warning" size="small"></ion-icon>
+                </div>
+                <span class="rating-text">(4.5)</span>
+              </div>
+
+              <!-- Description -->
+              <p class="product-description" *ngIf="product.description">
+                {{ product.description | slice:0:120 }}...
+              </p>
+
+              <!-- Price -->
+              <div class="product-price">
+                <span class="current-price" *ngIf="product.variants?.[0]?.prices?.[0]?.amount">
+                  {{ (product.variants[0].prices[0].amount / 100) | medusaCurrency }}
+                </span>
+                <span class="old-price" *ngIf="product.variants?.[0]?.prices?.[1]?.amount">
+                  {{ (product.variants[0].prices[1].amount / 100) | medusaCurrency }}
+                </span>
+              </div>
+            </div>
+          </ion-label>
+
+          <!-- Actions -->
+          <div slot="end" class="list-actions">
+            <ion-button
+              fill="clear"
+              [color]="isInWishlist(product) ? 'danger' : 'medium'"
+              (click)="addToWishlist(product, $event)">
+              <ion-icon [name]="isInWishlist(product) ? 'heart' : 'heartOutline'"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-item>
+      </ion-card>
+    </ion-list>
+  </div>
+</div>

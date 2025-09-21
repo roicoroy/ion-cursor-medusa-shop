@@ -1,0 +1,32 @@
+<ion-grid *ngIf="customer?.addresses">
+    <ion-row *ngFor="let add of customer?.addresses || []">
+        <ion-col *ngIf="add.is_default_billing">
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>
+                        Default Billing
+                    </ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <app-address-view [address]="add"></app-address-view>
+                </ion-card-content>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+</ion-grid>
+<ion-grid *ngIf="customer?.addresses">
+    <ion-row *ngFor="let add of customer?.addresses || []">
+        <ion-col *ngIf="add.is_default_shipping">
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>
+                        Default Shipping
+                    </ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <app-address-view [address]="add"></app-address-view>
+                </ion-card-content>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+</ion-grid>

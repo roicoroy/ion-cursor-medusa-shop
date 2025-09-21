@@ -1,0 +1,132 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Enhanced Checkout</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="address()" fill="solid">
+        <ion-icon name="location" slot="start"></ion-icon>
+        Addresses
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="viewState$ | async as vs">
+  
+  <!-- Loading State -->
+  <div *ngIf="isProcessingCheckout" class="loading-overlay">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Processing your checkout...</p>
+  </div>
+
+  <!-- Error Display -->
+  <ion-card *ngIf="checkoutError" color="danger">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="alert-circle" slot="start"></ion-icon>
+        Checkout Error
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ checkoutError }}</p>
+      <ion-button (click)="checkoutError = null" fill="outline" color="light">
+        Dismiss
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Customer Information Summary -->
+  <ion-card *ngIf="vs.customer" class="customer-summary">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="person" slot="start"></ion-icon>
+        Customer Information
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Email:</strong> {{ vs.customer.email }}</p>
+      <p><strong>Name:</strong> {{ vs.customer.first_name }} {{ vs.customer.last_name }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Cart Summary -->
+  <ion-card *ngIf="cart$ | async as cart" class="cart-summary">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="cart" slot="start"></ion-icon>
+        Order Summary
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let item of cart.items">
+          <ion-thumbnail slot="start">
+            <ion-img [src]="item.thumbnail" (ionError)="onImageError($event)"></ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            <h3>{{ item.title }}</h3>
+            <p>Quantity: {{ item.quantity }}</p>
+            <p>Price: {{ item.unit_price / 100 | currency:cart.currency_code }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      
+      <div class="order-totals">
+        <ion-item>
+          <ion-label>Subtotal</ion-label>
+          <ion-note slot="end">{{ (cart.subtotal || 0) / 100 | currency:cart.currency_code }}</ion-note>
+        </ion-item>
+        
+        <ion-item *ngIf="(cart.shipping_total || 0) > 0">
+          <ion-label>
+            Shipping
+            <p *ngIf="selectedShippingMethod$ | async as shippingMethod" class="shipping-method-name">
+              {{ shippingMethod.shipping_option?.name }}
+            </p>
+          </ion-label>
+          <ion-note slot="end">{{ (cart.shipping_total || 0) / 100 | currency:cart.currency_code }}</ion-note>
+        </ion-item>
+        
+        <ion-item *ngIf="(cart.tax_total || 0) > 0">
+          <ion-label>Tax</ion-label>
+          <ion-note slot="end">{{ (cart.tax_total || 0) / 100 | currency:cart.currency_code }}</ion-note>
+        </ion-item>
+        
+        <ion-item class="total-row">
+          <ion-label><strong>Total</strong></ion-label>
+          <ion-note slot="end"><strong>{{ (cart.total || 0) / 100 | currency:cart.currency_code }}</strong></ion-note>
+        </ion-item>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Enhanced Checkout Form -->
+  <app-checkout-form
+    *ngIf="isCheckoutFormVisible"
+    [initialData]="getInitialFormData(vs.customer)"
+    (formSubmit)="onCheckoutFormSubmit($event)"
+    (formStepChange)="onCheckoutStepChange($event)">
+  </app-checkout-form>
+
+  <!-- Payment Status -->
+  <ion-card *ngIf="secret_key$ | async as secretKey" class="payment-status">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="card" slot="start"></ion-icon>
+        Payment Ready
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Your payment session is ready. Complete the checkout form above to proceed with payment.</p>
+      <ion-button (click)="paymentModal(secretKey)" fill="solid" color="success">
+        <ion-icon name="card" slot="start"></ion-icon>
+        Complete Payment
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

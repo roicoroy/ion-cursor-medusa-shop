@@ -1,0 +1,76 @@
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.form-item {
+  margin-bottom: 16px;
+  --border-radius: 8px;
+  --border-width: 1px;
+  --border-color: var(--ion-color-medium);
+  --background: var(--ion-color-light);
+  
+  ion-label {
+    font-weight: 500;
+    color: var(--ion-color-dark);
+  }
+  
+  ion-input, ion-select {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    font-size: 16px;
+  }
+}
+
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: 14px;
+  margin: -12px 0 16px 16px;
+  padding: 0;
+}
+
+.form-actions {
+  margin-top: 32px;
+  padding: 0 16px;
+  
+  .submit-button {
+    margin-bottom: 16px;
+    --border-radius: 8px;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    font-weight: 600;
+  }
+  
+  .cancel-button {
+    --border-radius: 8px;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    font-weight: 600;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .form-container {
+    padding: 16px;
+  }
+  
+  .form-actions {
+    padding: 0;
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .form-item {
+    --background: var(--ion-color-dark);
+    --border-color: var(--ion-color-medium);
+  }
+  
+  ion-label {
+    color: var(--ion-color-light);
+  }
+} 

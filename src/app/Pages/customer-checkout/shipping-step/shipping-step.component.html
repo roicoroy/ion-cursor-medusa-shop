@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Shipping Step</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <!-- Shipping Options -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Shipping Method</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <app-shipping-options></app-shipping-options>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-buttons>
+    <ion-button (click)="goBack()" fill="outline">Previous</ion-button>
+    <ion-button (click)="goToPayment()" expand="block">Next</ion-button>
+  </ion-buttons>
+</ion-content>

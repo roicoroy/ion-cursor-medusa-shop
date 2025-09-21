@@ -1,0 +1,82 @@
+<form [formGroup]="addressForm" [ngxsForm]="formPath">
+  <ion-list>
+    @if(isShippingTheSame === true || isRegisterForm === false){
+    <ion-item lines="none">
+      <ion-input formControlName="email" type="email" fill="solid" label="Email" labelPlacement="floating"
+        maxlength="30" [clearInput]="true">
+      </ion-input>
+    </ion-item>
+    @if(addressForm.get('email')?.hasError('required')){
+    {{ 'Enter a valid Email' }}
+    } @else if(addressForm.get('email')?.hasError('pattern')){
+    {{ 'ERRORS.REQUIRED' | translate }}
+    }
+    }
+
+    <ion-item lines="none">
+      <ion-input formControlName="first_name" required maxlength="30" type="text" fill="outline"
+        [label]="'ADDRESS.FIRST_NAME' | translate" labelPlacement="floating" [clearInput]="true"></ion-input>
+      <p class="ion-error" *ngIf="addressForm.get('first_name')?.hasError('required')">
+        {{ 'ERRORS.REQUIRED' | translate }}
+      </p>
+      <p class="ion-error" *ngIf="addressForm.get('first_name')?.hasError('pattern')">
+        {{ 'ERRORS.PATTERN' | translate }}
+      </p>
+    </ion-item>
+
+    <ion-item>
+      <ion-input formControlName="last_name" required maxlength="30" type="text" fill="solid"
+        [label]="'ADDRESS.LAST_NAME' | translate" labelPlacement="floating" [clearInput]="true"></ion-input>
+      <p class="ion-error" *ngIf="addressForm.get('last_name')?.hasError('required')">
+        {{ 'ERRORS.REQUIRED' | translate }}
+      </p>
+      <p class="ion-error" *ngIf="addressForm.get('last_name')?.hasError('pattern')">
+        {{ 'ERRORS.PATTERN' | translate }}
+      </p>
+    </ion-item>
+
+    <ion-item>
+      <ion-input formControlName="address_1" required maxlength="30" type="text"
+        [label]="'ADDRESS.ADDRESS_LINE_1' | translate" labelPlacement="floating" [clearInput]="true">
+      </ion-input>
+      <p class="ion-error" *ngIf="addressForm.get('address_1')?.hasError('required')">
+        {{ 'ERRORS.REQUIRED' | translate }}
+      </p>
+    </ion-item>
+    <ion-item>
+      <ion-input formControlName="address_2" required maxlength="30" type="text" fill="outline"
+        [label]="'ADDRESS.ADDRESS_LINE_2' | translate" labelPlacement="floating" [clearInput]="true"></ion-input>
+    </ion-item>
+    @if(!isShippingTheSame){
+    <app-region-select></app-region-select>
+    } @else {
+    <ion-item>
+      <ion-label>Shipping and Billing addresses must be on the same country</ion-label>
+    </ion-item>
+    }
+    <ion-item>
+      <ion-input formControlName="city" required type="text" fill="outline" [label]="'City' | translate"
+        labelPlacement="floating" [clearInput]="true">
+      </ion-input>
+      <p class="ion-error" *ngIf="addressForm.get('city')?.hasError('required')">
+        {{ 'ERRORS.REQUIRED' | translate }}
+      </p>
+    </ion-item>
+    <ion-item>
+      <ion-input formControlName="postal_code" required type="text" fill="outline" [label]="'Post Code' | translate"
+        labelPlacement="floating" [clearInput]="true">
+      </ion-input>
+      <p class="ion-error" *ngIf="addressForm.get('postal_code')?.hasError('required')">
+        {{ 'ERRORS.REQUIRED' | translate }}
+      </p>
+    </ion-item>
+    <ion-item>
+      <ion-input formControlName="phone" required type="text" fill="outline" [label]="'ex: ' + phoneNumberPlaceholder"
+        labelPlacement="floating" [clearInput]="true">
+      </ion-input>
+      <p class="ion-error" *ngIf="addressForm.get('phone')?.hasError('required')">
+        {{ 'ERRORS.REQUIRED' | translate }}
+      </p>
+    </ion-item>
+  </ion-list>
+</form>

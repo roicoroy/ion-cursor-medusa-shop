@@ -1,0 +1,130 @@
+.status-badge {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 16px;
+}
+
+.return-item {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  margin-bottom: 8px;
+  --background: transparent;
+  --border: none;
+}
+
+.return-item ion-thumbnail {
+  --size: 50px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.return-item ion-label h3 {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.return-item ion-label p {
+  margin: 2px 0;
+  font-size: 14px;
+  color: var(--ion-color-medium);
+}
+
+.timeline {
+  position: relative;
+  padding-left: 20px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--ion-color-light-shade);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.timeline-item.last {
+  margin-bottom: 0;
+}
+
+.timeline-icon {
+  position: absolute;
+  left: -20px;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ion-color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.timeline-icon ion-icon {
+  color: white;
+  font-size: 16px;
+}
+
+.timeline-content {
+  flex: 1;
+  padding-left: 16px;
+}
+
+.timeline-content h4 {
+  margin: 0 0 4px 0;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.timeline-content p {
+  margin: 0 0 4px 0;
+  color: var(--ion-color-medium);
+  font-size: 14px;
+}
+
+.timeline-content small {
+  color: var(--ion-color-medium-shade);
+  font-size: 12px;
+}
+
+ion-card {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+ion-card-header {
+  padding: 16px 16px 8px 16px;
+}
+
+ion-card-content {
+  padding: 8px 16px 16px 16px;
+}
+
+ion-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+ion-content {
+  --background: var(--ion-color-light-tint);
+}
+
+ion-list {
+  background: transparent;
+  padding: 0;
+} 

@@ -1,0 +1,32 @@
+<ion-accordion-group #accordionGroup>
+    <ion-accordion value="pricesList">
+        <ion-item slot="header" color="dark">
+            <ion-label>Quick Price list</ion-label>
+        </ion-item>
+        <div class="price-content ion-padding" slot="content">
+            <ion-item *ngFor="let variant of variants; let i = index" lines="none">
+                <ion-note slot="start" class="title-note">
+                    {{ variant.title }}
+                </ion-note>
+                <ion-buttons slot="start">
+                    <ion-button (click)="addToCart(variant)" fill="outline" size="small" color="primary">
+                        <ion-label>
+                            {{ variant.calculated_price?.calculated_amount | shortNumber | medusaCurrency }}
+                        </ion-label>
+                    </ion-button>
+                    <ion-button 
+                        (click)="addToWishlist(variant)" 
+                        fill="clear" 
+                        size="small" 
+                        [color]="isInWishlist() ? 'danger' : 'medium'"
+                        [disabled]="isInWishlist()">
+                        <ion-icon 
+                            [name]="isInWishlist() ? 'heart' : 'heart-outline'" 
+                            slot="icon-only">
+                        </ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>
+        </div>
+    </ion-accordion>
+</ion-accordion-group>

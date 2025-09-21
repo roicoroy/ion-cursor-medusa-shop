@@ -1,0 +1,442 @@
+// Checkout Form Component Styles
+.checkout-progress {
+  margin-bottom: 2rem;
+  --progress-background: var(--ion-color-primary-tint);
+  --progress-color: var(--ion-color-primary);
+}
+
+// Step Indicator
+.step-indicator {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      width: 100%;
+      height: 2px;
+      background-color: var(--ion-color-medium);
+      z-index: 1;
+    }
+
+    &.completed:not(:last-child)::after {
+      background-color: var(--ion-color-success);
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--ion-color-medium);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    .step-info {
+      text-align: center;
+      max-width: 120px;
+
+      .step-title {
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+        color: var(--ion-color-dark);
+      }
+
+      .step-description {
+        font-size: 0.75rem;
+        color: var(--ion-color-medium);
+        line-height: 1.2;
+      }
+    }
+
+    &.active {
+      .step-number {
+        background-color: var(--ion-color-primary);
+        transform: scale(1.1);
+      }
+
+      .step-title {
+        color: var(--ion-color-primary);
+      }
+    }
+
+    &.completed {
+      .step-number {
+        background-color: var(--ion-color-success);
+      }
+
+      .step-title {
+        color: var(--ion-color-success);
+      }
+    }
+
+    &.available {
+      .step-number {
+        background-color: var(--ion-color-primary-tint);
+      }
+    }
+
+    ion-icon {
+      position: absolute;
+      top: 0;
+      right: -10px;
+      font-size: 1.2rem;
+      z-index: 3;
+    }
+  }
+}
+
+// Step Content
+.step-content {
+  margin-bottom: 2rem;
+
+  ion-card {
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    ion-card-header {
+      background: linear-gradient(135deg, var(--ion-color-primary-tint), var(--ion-color-primary));
+      color: white;
+      border-radius: 12px 12px 0 0;
+
+      ion-card-title {
+        display: flex;
+        align-items: center;
+        font-size: 1.1rem;
+        font-weight: 600;
+
+        ion-icon {
+          margin-right: 0.5rem;
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    ion-card-content {
+      padding: 1.5rem;
+    }
+  }
+}
+
+// Form Fields
+ion-item {
+  --border-radius: 8px;
+  --background: var(--ion-color-light);
+  margin-bottom: 1rem;
+
+  &.item-has-focus {
+    --background: var(--ion-color-primary-tint);
+    --border-color: var(--ion-color-primary);
+  }
+
+  &.item-has-error {
+    --background: var(--ion-color-danger-tint);
+    --border-color: var(--ion-color-danger);
+  }
+
+  ion-input,
+  ion-select,
+  ion-textarea {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    font-size: 1rem;
+  }
+
+  ion-label {
+    font-weight: 500;
+    color: var(--ion-color-dark);
+  }
+}
+
+// Error Messages
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: 0.875rem;
+  margin: -0.5rem 0 1rem 1rem;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--ion-color-danger-tint);
+  border-radius: 4px;
+  border-left: 3px solid var(--ion-color-danger);
+}
+
+// Grid Layouts
+ion-grid {
+  padding: 0;
+
+  ion-row {
+    margin: 0 -0.5rem;
+
+    ion-col {
+      padding: 0 0.5rem;
+    }
+  }
+}
+
+// Radio Groups
+ion-radio-group {
+  ion-item {
+    --background: transparent;
+    --border-color: var(--ion-color-medium);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+
+    &:hover {
+      --background: var(--ion-color-light);
+    }
+
+    ion-radio {
+      --color: var(--ion-color-primary);
+      --color-checked: var(--ion-color-primary);
+    }
+
+    ion-label {
+      h3 {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        color: var(--ion-color-dark);
+      }
+
+      p {
+        color: var(--ion-color-medium);
+        font-size: 0.875rem;
+        margin: 0;
+      }
+    }
+
+    ion-note {
+      font-weight: 600;
+      color: var(--ion-color-primary);
+    }
+  }
+}
+
+// Checkboxes
+ion-checkbox {
+  --border-radius: 4px;
+  --border-color: var(--ion-color-medium);
+  --border-color-checked: var(--ion-color-primary);
+  --checkmark-color: white;
+  --background-checked: var(--ion-color-primary);
+}
+
+// Order Summary
+.order-totals {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ion-color-light);
+
+  ion-item {
+    --background: transparent;
+    --border-color: transparent;
+    margin-bottom: 0.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &.total-row {
+      border-top: 2px solid var(--ion-color-primary);
+      padding-top: 1rem;
+      margin-top: 1rem;
+
+      ion-label,
+      ion-note {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+// Navigation Buttons
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0;
+  gap: 1rem;
+
+  ion-button {
+    min-width: 120px;
+    height: 48px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+
+    ion-button {
+      width: 100%;
+      min-width: auto;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .step-indicator {
+    flex-direction: column;
+    gap: 1rem;
+
+    .step {
+      flex-direction: row;
+      text-align: left;
+
+      &:not(:last-child)::after {
+        display: none;
+      }
+
+      .step-number {
+        margin-bottom: 0;
+        margin-right: 1rem;
+      }
+
+      .step-info {
+        text-align: left;
+        max-width: none;
+        flex: 1;
+      }
+    }
+  }
+
+  .step-content {
+    ion-card-content {
+      padding: 1rem;
+    }
+  }
+
+  ion-grid {
+    ion-row {
+      flex-direction: column;
+
+      ion-col {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+// Loading States
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+// Success States
+.success {
+  .step-number {
+    background-color: var(--ion-color-success) !important;
+  }
+}
+
+// Invalid Field Styling
+.invalid {
+  --border-color: var(--ion-color-danger);
+  --background: var(--ion-color-danger-tint);
+}
+
+// Focus States
+ion-input:focus-within,
+ion-select:focus-within,
+ion-textarea:focus-within {
+  --border-color: var(--ion-color-primary);
+  --background: var(--ion-color-primary-tint);
+}
+
+// Animation Classes
+.step-content {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Custom Scrollbar
+ion-content {
+  --scrollbar-color: var(--ion-color-primary-tint);
+  --scrollbar-width: 6px;
+}
+
+// Card Hover Effects
+ion-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+// Form Validation Visual Feedback
+ion-item.item-has-error {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+// Progress Bar Enhancement
+.checkout-progress {
+  --progress-background: linear-gradient(90deg, var(--ion-color-primary), var(--ion-color-primary-tint));
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+// Step Completion Animation
+.step.completed .step-number {
+  animation: completeStep 0.5s ease-out;
+}
+
+@keyframes completeStep {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}

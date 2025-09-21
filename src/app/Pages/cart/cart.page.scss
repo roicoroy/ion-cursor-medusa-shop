@@ -1,0 +1,35 @@
+/* Cart Page Styles */
+
+// Page container
+ion-content {
+  --background: var(--ion-color-light-tint);
+}
+
+// Header styling
+ion-header {
+  ion-toolbar {
+    --background: var(--ion-color-primary);
+    --color: white;
+
+    ion-title {
+      font-weight: 600;
+    }
+  }
+}
+
+// Main content area
+.cart-content {
+  min-height: 100vh;
+  padding: 0;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  ion-header {
+    ion-toolbar {
+      ion-title {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}

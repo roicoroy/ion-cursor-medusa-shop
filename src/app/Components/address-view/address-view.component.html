@@ -1,0 +1,35 @@
+<ion-item class="address-item">
+  <div class="address-content">
+    <div class="address-header">
+      <ion-label class="address-name">
+        {{ address.first_name || '' }} {{ address.last_name || '' }}
+      </ion-label>
+      <div class="address-badges" *ngIf="isDefaultBilling || isDefaultShipping">
+        <ion-text color="primary" *ngIf="isDefaultBilling" class="badge">
+          Default Billing
+        </ion-text>
+        <ion-text color="secondary" *ngIf="isDefaultShipping" class="badge">
+          Default Shipping
+        </ion-text>
+      </div>
+    </div>
+    
+    <div class="address-details">
+      <ion-text class="address-line" *ngIf="address.address_1">{{ address.address_1 }}</ion-text>
+      <ion-text class="address-line" *ngIf="address.address_2">{{ address.address_2 }}</ion-text>
+      <ion-text class="address-line" *ngIf="address.city || address.postal_code">{{ address.city || '' }}{{ address.city && address.postal_code ? ', ' : '' }}{{ address.postal_code || '' }}</ion-text>
+      <ion-text class="address-line" *ngIf="address.country_code">{{ address.country_code }}</ion-text>
+      <ion-text class="address-line" *ngIf="address.phone">Phone: {{ address.phone }}</ion-text>
+      <ion-text class="address-line" *ngIf="address.company">Company: {{ address.company }}</ion-text>
+    </div>
+  </div>
+
+  <div class="address-actions" *ngIf="showActions">
+    <ion-button fill="clear" size="small" (click)="onEdit()">
+      <ion-icon name="create" slot="icon-only"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" size="small" color="danger" (click)="onDelete()">
+      <ion-icon name="trash" slot="icon-only"></ion-icon>
+    </ion-button>
+  </div>
+</ion-item> 

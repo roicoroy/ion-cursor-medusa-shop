@@ -1,0 +1,22 @@
+.no-providers {
+  text-align: center;
+  padding: 2rem;
+  color: var(--ion-color-medium);
+}
+
+ion-radio-group {
+  width: 100%;
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+ion-radio {
+  margin: 0.5rem 0;
+}
+
+ion-note {
+  font-size: 0.9rem;
+} 

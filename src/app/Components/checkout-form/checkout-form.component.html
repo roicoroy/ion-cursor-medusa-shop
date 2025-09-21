@@ -1,0 +1,525 @@
+<ion-content class="ion-padding">
+  <!-- Progress Bar -->
+  <ion-progress-bar 
+    [value]="getProgressPercentage() / 100" 
+    color="primary"
+    class="checkout-progress">
+  </ion-progress-bar>
+
+  <!-- Step Indicator -->
+  <div class="step-indicator">
+    <div class="step" 
+         *ngFor="let step of [0,1,2,3]; let i = index"
+         [class.active]="i === currentStep"
+         [class.completed]="stepValidation[i] && i < currentStep"
+         [class.available]="canGoToStep(i)"
+         (click)="goToStep(i)">
+      <div class="step-number">{{ i + 1 }}</div>
+      <div class="step-info">
+        <div class="step-title">{{ getStepTitle(i) }}</div>
+        <div class="step-description">{{ getStepDescription(i) }}</div>
+      </div>
+      <ion-icon 
+        *ngIf="stepValidation[i] && i < currentStep" 
+        name="checkmark-circle" 
+        color="success">
+      </ion-icon>
+    </div>
+  </div>
+
+  <!-- Form Container -->
+  <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Step 1: Customer Information -->
+    <div *ngIf="currentStep === 0" class="step-content">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="person" slot="start"></ion-icon>
+            Customer Information
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div formGroupName="customerInfo">
+            <ion-item>
+              <ion-input 
+                formControlName="email" 
+                type="email" 
+                label="Email Address" 
+                labelPlacement="floating"
+                placeholder="Enter your email"
+                [class.invalid]="isFieldInvalid('customerInfo.email')">
+              </ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="isFieldInvalid('customerInfo.email')">
+              {{ getFieldError('customerInfo.email') }}
+            </div>
+
+            <ion-item>
+              <ion-input 
+                formControlName="firstName" 
+                type="text" 
+                label="First Name" 
+                labelPlacement="floating"
+                placeholder="Enter your first name"
+                [class.invalid]="isFieldInvalid('customerInfo.firstName')">
+              </ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="isFieldInvalid('customerInfo.firstName')">
+              {{ getFieldError('customerInfo.firstName') }}
+            </div>
+
+            <ion-item>
+              <ion-input 
+                formControlName="lastName" 
+                type="text" 
+                label="Last Name" 
+                labelPlacement="floating"
+                placeholder="Enter your last name"
+                [class.invalid]="isFieldInvalid('customerInfo.lastName')">
+              </ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="isFieldInvalid('customerInfo.lastName')">
+              {{ getFieldError('customerInfo.lastName') }}
+            </div>
+
+            <ion-item>
+              <ion-input 
+                formControlName="phone" 
+                type="tel" 
+                label="Phone Number" 
+                labelPlacement="floating"
+                placeholder="Enter your phone number"
+                [class.invalid]="isFieldInvalid('customerInfo.phone')">
+              </ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="isFieldInvalid('customerInfo.phone')">
+              {{ getFieldError('customerInfo.phone') }}
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Step 2: Addresses -->
+    <div *ngIf="currentStep === 1" class="step-content">
+      <!-- Shipping Address -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="location" slot="start"></ion-icon>
+            Shipping Address
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div formGroupName="shippingAddress">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-input 
+                      formControlName="first_name" 
+                      type="text" 
+                      label="First Name" 
+                      labelPlacement="floating"
+                      [class.invalid]="isFieldInvalid('shippingAddress.first_name')">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-input 
+                      formControlName="last_name" 
+                      type="text" 
+                      label="Last Name" 
+                      labelPlacement="floating"
+                      [class.invalid]="isFieldInvalid('shippingAddress.last_name')">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <ion-item>
+              <ion-input 
+                formControlName="address_1" 
+                type="text" 
+                label="Address Line 1" 
+                labelPlacement="floating"
+                [class.invalid]="isFieldInvalid('shippingAddress.address_1')">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input 
+                formControlName="address_2" 
+                type="text" 
+                label="Address Line 2 (Optional)" 
+                labelPlacement="floating">
+              </ion-input>
+            </ion-item>
+
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-input 
+                      formControlName="city" 
+                      type="text" 
+                      label="City" 
+                      labelPlacement="floating"
+                      [class.invalid]="isFieldInvalid('shippingAddress.city')">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-input 
+                      formControlName="postal_code" 
+                      type="text" 
+                      label="Postal Code" 
+                      labelPlacement="floating"
+                      [class.invalid]="isFieldInvalid('shippingAddress.postal_code')">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <ion-item>
+              <ion-select 
+                formControlName="country_code" 
+                label="Country" 
+                labelPlacement="floating"
+                [class.invalid]="isFieldInvalid('shippingAddress.country_code')">
+                <ion-select-option value="gb">United Kingdom</ion-select-option>
+                <ion-select-option value="us">United States</ion-select-option>
+                <ion-select-option value="ca">Canada</ion-select-option>
+                <ion-select-option value="au">Australia</ion-select-option>
+                <ion-select-option value="de">Germany</ion-select-option>
+                <ion-select-option value="fr">France</ion-select-option>
+                <ion-select-option value="it">Italy</ion-select-option>
+                <ion-select-option value="es">Spain</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-input 
+                formControlName="phone" 
+                type="tel" 
+                label="Phone" 
+                labelPlacement="floating"
+                [class.invalid]="isFieldInvalid('shippingAddress.phone')">
+              </ion-input>
+            </ion-item>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Billing Address -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="card" slot="start"></ion-icon>
+            Billing Address
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item>
+            <ion-checkbox 
+              (ionChange)="onBillingSameAsShippingChange($event.detail.checked)">
+            </ion-checkbox>
+            <ion-label>Same as shipping address</ion-label>
+          </ion-item>
+
+          <div formGroupName="billingAddress" *ngIf="!checkoutForm.get('billingSameAsShipping')?.value">
+            <!-- Billing address fields (same structure as shipping) -->
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-input 
+                      formControlName="first_name" 
+                      type="text" 
+                      label="First Name" 
+                      labelPlacement="floating"
+                      [class.invalid]="isFieldInvalid('billingAddress.first_name')">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-input 
+                      formControlName="last_name" 
+                      type="text" 
+                      label="Last Name" 
+                      labelPlacement="floating"
+                      [class.invalid]="isFieldInvalid('billingAddress.last_name')">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <ion-item>
+              <ion-input 
+                formControlName="address_1" 
+                type="text" 
+                label="Address Line 1" 
+                labelPlacement="floating"
+                [class.invalid]="isFieldInvalid('billingAddress.address_1')">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input 
+                formControlName="address_2" 
+                type="text" 
+                label="Address Line 2 (Optional)" 
+                labelPlacement="floating">
+              </ion-input>
+            </ion-item>
+
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-input 
+                      formControlName="city" 
+                      type="text" 
+                      label="City" 
+                      labelPlacement="floating"
+                      [class.invalid]="isFieldInvalid('billingAddress.city')">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-input 
+                      formControlName="postal_code" 
+                      type="text" 
+                      label="Postal Code" 
+                      labelPlacement="floating"
+                      [class.invalid]="isFieldInvalid('billingAddress.postal_code')">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <ion-item>
+              <ion-select 
+                formControlName="country_code" 
+                label="Country" 
+                labelPlacement="floating"
+                [class.invalid]="isFieldInvalid('billingAddress.country_code')">
+                <ion-select-option value="gb">United Kingdom</ion-select-option>
+                <ion-select-option value="us">United States</ion-select-option>
+                <ion-select-option value="ca">Canada</ion-select-option>
+                <ion-select-option value="au">Australia</ion-select-option>
+                <ion-select-option value="de">Germany</ion-select-option>
+                <ion-select-option value="fr">France</ion-select-option>
+                <ion-select-option value="it">Italy</ion-select-option>
+                <ion-select-option value="es">Spain</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-input 
+                formControlName="phone" 
+                type="tel" 
+                label="Phone" 
+                labelPlacement="floating"
+                [class.invalid]="isFieldInvalid('billingAddress.phone')">
+              </ion-input>
+            </ion-item>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Step 3: Shipping & Payment -->
+    <div *ngIf="currentStep === 2" class="step-content">
+      <!-- Shipping Methods -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="car" slot="start"></ion-icon>
+            Shipping Method
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-radio-group 
+            formControlName="shippingMethod"
+            (ionChange)="onShippingMethodSelect($event.detail.value)">
+            <ion-item *ngFor="let option of shippingOptions$ | async">
+              <ion-radio [value]="option.id">
+                <ion-label>
+                  <h3>{{ option.name }}</h3>
+                  <p *ngIf="option.provider">{{ option.provider.id }}</p>
+                </ion-label>
+                <ion-note slot="end">
+                  {{ option.calculated_price / 100 | currency:'USD' }}
+                </ion-note>
+              </ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Payment Methods -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="card" slot="start"></ion-icon>
+            Payment Method
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-radio-group 
+            formControlName="paymentMethod"
+            (ionChange)="onPaymentMethodSelect($event.detail.value)">
+            <ion-item *ngFor="let provider of paymentProviders$ | async">
+              <ion-radio [value]="provider.id">
+                <ion-label>
+                  <h3>{{ provider.name }}</h3>
+                  <p>{{ provider.description }}</p>
+                </ion-label>
+                <ion-icon [name]="getPaymentIcon(provider.id)" slot="end"></ion-icon>
+              </ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Order Notes -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="document-text" slot="start"></ion-icon>
+            Order Notes (Optional)
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item>
+            <ion-textarea 
+              formControlName="orderNotes"
+              label="Special instructions or notes"
+              labelPlacement="floating"
+              placeholder="Any special instructions for your order..."
+              rows="3">
+            </ion-textarea>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Step 4: Review & Complete -->
+    <div *ngIf="currentStep === 3" class="step-content">
+      <!-- Order Summary -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="list" slot="start"></ion-icon>
+            Order Summary
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div *ngIf="cart$ | async as cart">
+            <ion-list>
+              <ion-item *ngFor="let item of cart.items">
+                <ion-thumbnail slot="start">
+                  <ion-img [src]="item.thumbnail" alt="{{ item.title }}"></ion-img>
+                </ion-thumbnail>
+                <ion-label>
+                  <h3>{{ item.title }}</h3>
+                  <p>Quantity: {{ item.quantity }}</p>
+                  <p>Price: {{ item.unit_price / 100 | currency:cart.currency_code }}</p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+
+            <div class="order-totals">
+              <ion-item>
+                <ion-label>Subtotal</ion-label>
+                <ion-note slot="end">{{ (cart.subtotal || 0) / 100 | currency:cart.currency_code }}</ion-note>
+              </ion-item>
+              
+              <ion-item *ngIf="(cart.shipping_total || 0) > 0">
+                <ion-label>Shipping</ion-label>
+                <ion-note slot="end">{{ (cart.shipping_total || 0) / 100 | currency:cart.currency_code }}</ion-note>
+              </ion-item>
+              
+              <ion-item *ngIf="(cart.tax_total || 0) > 0">
+                <ion-label>Tax</ion-label>
+                <ion-note slot="end">{{ (cart.tax_total || 0) / 100 | currency:cart.currency_code }}</ion-note>
+              </ion-item>
+              
+              <ion-item class="total-row">
+                <ion-label><strong>Total</strong></ion-label>
+                <ion-note slot="end"><strong>{{ (cart.total || 0) / 100 | currency:cart.currency_code }}</strong></ion-note>
+              </ion-item>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Terms and Conditions -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="shield-checkmark" slot="start"></ion-icon>
+            Terms & Conditions
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item>
+            <ion-checkbox 
+              formControlName="termsAccepted"
+              [class.invalid]="isFieldInvalid('termsAccepted')">
+            </ion-checkbox>
+            <ion-label>
+              I agree to the <a href="#" (click)="openTerms($event)">Terms and Conditions</a> and 
+              <a href="#" (click)="openPrivacyPolicy($event)">Privacy Policy</a>
+            </ion-label>
+          </ion-item>
+          <div class="error-message" *ngIf="isFieldInvalid('termsAccepted')">
+            You must accept the terms and conditions to continue
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons">
+      <ion-button 
+        *ngIf="currentStep > 0"
+        (click)="previousStep()" 
+        fill="outline" 
+        color="medium">
+        <ion-icon name="arrow-back" slot="start"></ion-icon>
+        Previous
+      </ion-button>
+
+      <ion-button 
+        *ngIf="currentStep < totalSteps - 1"
+        (click)="nextStep()" 
+        [disabled]="!canProceedToNextStep()"
+        fill="solid" 
+        color="primary">
+        Next
+        <ion-icon name="arrow-forward" slot="end"></ion-icon>
+      </ion-button>
+
+      <ion-button 
+        *ngIf="currentStep === totalSteps - 1"
+        type="submit"
+        [disabled]="!checkoutForm.valid || isSubmitting"
+        fill="solid" 
+        color="success">
+        <ion-icon name="checkmark" slot="start"></ion-icon>
+        {{ isSubmitting ? 'Processing...' : 'Complete Order' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

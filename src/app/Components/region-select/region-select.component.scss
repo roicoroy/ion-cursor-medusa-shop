@@ -1,0 +1,117 @@
+/* Region Selector Styles */
+
+.tp-region-selector {
+  .tp-region-item {
+    --background: var(--tp-grey-1);
+    --border-radius: 8px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    margin: 8px 0;
+    
+    ion-icon {
+      color: var(--tp-theme-primary);
+    }
+    
+    ion-label {
+      font-weight: 500;
+      color: var(--tp-common-black);
+    }
+    
+    &:hover {
+      --background: var(--tp-grey-2);
+    }
+  }
+}
+
+/* Region Popover Styles */
+.tp-region-popover-content {
+  --background: var(--tp-common-white);
+  
+  ion-list {
+    background: var(--tp-common-white);
+    margin: 0;
+    padding: 0;
+    
+    ion-list-header {
+      background: var(--tp-grey-1);
+      margin: 0;
+      
+      ion-label {
+        font-weight: 600;
+        color: var(--tp-common-black);
+        font-size: 16px;
+      }
+    }
+    
+    ion-item {
+      --background: var(--tp-common-white);
+      --border-color: var(--tp-border-primary);
+      --padding-start: 16px;
+      --padding-end: 16px;
+      
+      &.selected {
+        --background: var(--tp-grey-1);
+        --color: var(--tp-theme-primary);
+        
+        ion-label h3 {
+          color: var(--tp-theme-primary);
+          font-weight: 600;
+        }
+      }
+      
+      ion-label {
+        h3 {
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--tp-common-black);
+          margin: 0 0 4px 0;
+        }
+        
+        p {
+          font-size: 12px;
+          color: var(--tp-text-2);
+          margin: 0;
+        }
+      }
+      
+      ion-icon {
+        color: var(--tp-theme-primary);
+        font-size: 18px;
+      }
+      
+      &:hover {
+        --background: var(--tp-grey-1);
+      }
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tp-region-selector {
+    .tp-region-item {
+      --padding-start: 12px;
+      --padding-end: 12px;
+      margin: 4px 0;
+    }
+  }
+  
+  .tp-region-popover-content {
+    ion-list {
+      ion-item {
+        --padding-start: 12px;
+        --padding-end: 12px;
+        
+        ion-label {
+          h3 {
+            font-size: 13px;
+          }
+          
+          p {
+            font-size: 11px;
+          }
+        }
+      }
+    }
+  }
+} 

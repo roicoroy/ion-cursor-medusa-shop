@@ -1,0 +1,26 @@
+.auth-buttons-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.logout-btn {
+  margin-right: 8px;
+}
+
+ion-popover {
+  --width: 200px;
+}
+
+ion-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  
+  ion-icon {
+    margin-right: 12px;
+  }
+}
+
+ion-item-divider {
+  margin: 8px 0;
+} 

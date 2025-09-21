@@ -1,0 +1,23 @@
+<!-- Payment Providers Component -->
+<div>
+  <div *ngIf="!(payment_providers$ | async) || (payment_providers$ | async)?.length === 0" class="no-providers">
+    <ion-text color="medium">
+      <p>Loading payment methods...</p>
+    </ion-text>
+  </div>
+  
+  <ion-radio-group value="space-between" (ionChange)="createPaymentProviders($event)" *ngIf="(payment_providers$ | async) as providers">
+    @for (provider of providers; track provider) {
+    <ion-radio justify="space-between" [value]="provider">
+      <ion-item lines="none">
+        <ion-label slot="start">
+          {{ provider.id }}
+        </ion-label>
+        <ion-note slot="end">
+          {{ provider.is_enabled ? 'Enabled' : 'Disabled' }}
+        </ion-note>
+      </ion-item>
+    </ion-radio>
+    }
+  </ion-radio-group>
+</div>

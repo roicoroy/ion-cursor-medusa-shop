@@ -1,0 +1,112 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Wishlist</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goToCart()" fill="clear">
+        <ion-icon name="cart" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">My Wishlist</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Loading wishlist...</p>
+  </div>
+
+  <!-- Not Logged In State -->
+  <div *ngIf="!(isLoggedIn$ | async)" class="ion-text-center ion-padding">
+    <ion-icon name="heart-outline" style="font-size: 64px; color: var(--ion-color-medium);"></ion-icon>
+    <h3>Please Log In</h3>
+    <p>You need to be logged in to view your wishlist.</p>
+    <ion-button (click)="goBack()" fill="solid">
+      <ion-icon name="log-in" slot="start"></ion-icon>
+      Go to Login
+    </ion-button>
+  </div>
+
+  <!-- Empty Wishlist State -->
+  <div *ngIf="(isLoggedIn$ | async) && (wishlistProducts$ | async)?.length === 0" class="ion-text-center ion-padding">
+    <ion-icon name="heart-outline" style="font-size: 64px; color: var(--ion-color-medium);"></ion-icon>
+    <h3>Your Wishlist is Empty</h3>
+    <p>Start adding products to your wishlist to see them here.</p>
+    <ion-button (click)="goBack()" fill="solid">
+      <ion-icon name="bag" slot="start"></ion-icon>
+      Continue Shopping
+    </ion-button>
+  </div>
+
+  <!-- Wishlist Items -->
+  <div *ngIf="(isLoggedIn$ | async) && ((wishlistProducts$ | async)?.length || 0) > 0">
+    <ion-list>
+      <ion-item *ngFor="let item of wishlistProducts$ | async; let i = index" class="wishlist-item">
+        <!-- Product Image -->
+        <ion-thumbnail slot="start" (click)="goToProduct(item)" class="product-image">
+          <ion-img 
+            [src]="item.thumbnail || 'assets/images/placeholder-product.jpg'" 
+            [alt]="item.title || 'Product'"
+            (ionError)="item.thumbnail = 'assets/images/placeholder-product.jpg'">
+          </ion-img>
+        </ion-thumbnail>
+
+        <!-- Product Details -->
+        <ion-label class="product-details">
+          <h3 (click)="goToProduct(item)" class="product-title">{{ item.title || 'Product' }}</h3>
+          <p class="product-description">{{ item.description || 'No description available' }}</p>
+          
+          <!-- Price -->
+          <div class="product-price">
+            <ion-text color="primary">
+              <strong>{{ (item.variants?.[0]?.prices?.[0]?.amount || 0) | medusaCurrency:(item.variants?.[0]?.prices?.[0]?.currency_code || 'usd') }}</strong>
+            </ion-text>
+          </div>
+        </ion-label>
+
+        <!-- Action Buttons -->
+        <div slot="end" class="action-buttons">
+          <!-- Add to Cart Button -->
+          <ion-button 
+            (click)="addToCart(item)" 
+            fill="solid" 
+            size="small"
+            color="primary">
+            <ion-icon name="cart" slot="start"></ion-icon>
+            Add to Cart
+          </ion-button>
+
+          <!-- Remove Button -->
+          <ion-button 
+            (click)="removeFromWishlist(i)" 
+            fill="clear" 
+            size="small"
+            color="danger">
+            <ion-icon name="trash" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-item>
+    </ion-list>
+
+    <!-- Go to Cart Button -->
+    <div class="ion-padding">
+      <ion-button 
+        (click)="goToCart()" 
+        expand="block" 
+        fill="solid"
+        color="success">
+        <ion-icon name="cart" slot="start"></ion-icon>
+        Go to Cart
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

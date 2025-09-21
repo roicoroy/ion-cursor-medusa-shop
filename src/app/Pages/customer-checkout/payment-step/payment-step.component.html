@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Payment Step</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <!-- Payment Providers -->
+  <ion-card *ngIf="secret_key$ | async">
+    <ion-card-header>
+      <ion-card-title>Payment Method</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <app-payment-providers></app-payment-providers>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="checkout-actions">
+    <ion-button (click)="testPaymentProviders()" expand="block" fill="outline" shape="round" color="warning">
+      <ion-icon name="construct-outline" slot="start"></ion-icon>
+      Test Payment Providers
+    </ion-button>
+  </div>
+
+  <ion-buttons>
+    <ion-button (click)="goBack()" fill="outline">Previous</ion-button>
+    <ion-button (click)="goToReview()" expand="block">Next</ion-button>
+  </ion-buttons>
+</ion-content>

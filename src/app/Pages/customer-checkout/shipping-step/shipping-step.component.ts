@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonHeader, IonToolbar, IonTitle, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonToolbar, IonTitle, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonButtons } from '@ionic/angular/standalone';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { CheckoutActions } from 'src/app/store/checkout/checkout.actions';
@@ -25,7 +25,6 @@ import { NavigationService } from 'src/app/shared/navigation/navigation.service'
     IonCardContent,
     IonButton,
     IonButtons,
-    IonIcon,
     ShippingOptionsComponent,
   ]
 })

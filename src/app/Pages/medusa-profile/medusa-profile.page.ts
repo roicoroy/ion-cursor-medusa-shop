@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonButton, IonButtons, IonToolbar, IonModal, IonTitle, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonGrid, IonRow, IonCol, IonAvatar, IonSegment, IonSegmentButton, IonLabel, IonList, IonItem, IonChip, IonToggle, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonButton, IonButtons, IonToolbar, IonModal, IonTitle, IonIcon, IonGrid, IonRow, IonCol, IonAvatar, IonSegment, IonSegmentButton, IonLabel, IonList, IonItem, IonChip, IonToggle, IonInput } from '@ionic/angular/standalone';
 import { Observable, Subject } from 'rxjs';
 import { NavigationService } from '../../shared/navigation/navigation.service';
 import { Store } from '@ngxs/store';
@@ -32,11 +32,6 @@ export interface OrderIdParam {
     IonTitle,
     IonIcon,
     IonContent,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
     IonGrid,
     IonRow,
     IonCol,

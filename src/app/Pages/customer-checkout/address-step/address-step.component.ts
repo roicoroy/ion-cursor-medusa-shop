@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonToolbar, IonTitle, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonToolbar, IonTitle, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton } from '@ionic/angular/standalone';
 import { lastValueFrom, Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { MedusaCartActions } from 'src/app/store/medusa-cart/medusa-cart.actions';
@@ -31,8 +31,6 @@ import { RegionsState } from 'src/app/store/regions/regions.state';
     IonCardTitle,
     IonCardContent,
     IonButton,
-    IonButtons,
-    IonIcon,
     DefaultAddressesViewComponent,
   ]
 })

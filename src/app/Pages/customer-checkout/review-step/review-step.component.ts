@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonHeader, IonToolbar, IonTitle, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonThumbnail, IonImg, IonLabel, IonNote, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonToolbar, IonTitle, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonThumbnail, IonImg, IonLabel, IonNote, IonButton, IonButtons } from '@ionic/angular/standalone';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { NavigationService } from 'src/app/shared/navigation/navigation.service';
@@ -32,7 +32,6 @@ import { AppFacade, IAppFacadeState } from 'src/app/store/app.facade';
     IonNote,
     IonButton,
     IonButtons,
-    IonIcon,
   ]
 })
 export class ReviewStepComponent implements OnDestroy {

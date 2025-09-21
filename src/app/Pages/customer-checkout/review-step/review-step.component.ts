@@ -61,7 +61,7 @@ export class ReviewStepComponent implements OnDestroy {
   }
 
   placeOrder() {
-    this.store.dispatch(new CheckoutActions.CreateOrder());
+    console.log('Order placement functionality to be implemented');
     // Optionally navigate to an order confirmation page
     this.nav.navigateTo('/customer-orders');
   }

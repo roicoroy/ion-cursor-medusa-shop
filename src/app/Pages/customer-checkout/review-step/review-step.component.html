@@ -22,10 +22,10 @@
     </ion-card-header>
     <ion-card-content>
       <p>{{ vs.cart.shipping_address?.first_name }} {{ vs.cart.shipping_address?.last_name }}</p>
-      <p>{{ vs.cart.shipping_address.address_1 }} {{ vs.cart.shipping_address.address_2 }}</p>
-      <p>{{ vs.cart.shipping_address.city }}, {{ vs.cart.shipping_address.postal_code }}</p>
-      <p>{{ vs.cart.shipping_address.country_code | uppercase }}</p>
-      <p>{{ vs.cart.shipping_address.phone }}</p>
+      <p>{{ vs.cart.shipping_address?.address_1 }} {{ vs.cart.shipping_address?.address_2 }}</p>
+      <p>{{ vs.cart.shipping_address?.city }}, {{ vs.cart.shipping_address?.postal_code }}</p>
+      <p>{{ vs.cart.shipping_address?.country_code | uppercase }}</p>
+      <p>{{ vs.cart.shipping_address?.phone }}</p>
     </ion-card-content>
   </ion-card>
 
@@ -35,10 +35,10 @@
     </ion-card-header>
     <ion-card-content>
       <p>{{ vs.cart.billing_address?.first_name }} {{ vs.cart.billing_address?.last_name }}</p>
-      <p>{{ vs.cart.billing_address.address_1 }} {{ vs.cart.billing_address.address_2 }}</p>
-      <p>{{ vs.cart.billing_address.city }}, {{ vs.cart.billing_address.postal_code }}</p>
-      <p>{{ vs.cart.billing_address.country_code | uppercase }}</p>
-      <p>{{ vs.cart.billing_address.phone }}</p>
+      <p>{{ vs.cart.billing_address?.address_1 }} {{ vs.cart.billing_address?.address_2 }}</p>
+      <p>{{ vs.cart.billing_address?.city }}, {{ vs.cart.billing_address?.postal_code }}</p>
+      <p>{{ vs.cart.billing_address?.country_code | uppercase }}</p>
+      <p>{{ vs.cart.billing_address?.phone }}</p>
     </ion-card-content>
   </ion-card>
 
@@ -49,17 +49,17 @@
     </ion-card-header>
     <ion-card-content>
       <p><strong>{{ shippingMethod.shipping_option?.name }}</strong></p>
-      <p>{{ shippingMethod.price / 100 | currency:vs.cart.currency_code }}</p>
+      <p>{{ shippingMethod.price / 100 | currency:vs.cart?.currency_code }}</p>
     </ion-card-content>
   </ion-card>
 
   <!-- Payment Method Summary (Placeholder for now, actual payment method might be more complex) -->
-  <ion-card *ngIf="vs.cart?.payment_sessions && vs.cart.payment_sessions.length > 0">
+  <ion-card *ngIf="vs.cart?.payment_sessions && vs.cart?.payment_sessions?.length > 0">
     <ion-card-header>
       <ion-card-title>Payment Method</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p><strong>{{ vs.cart.payment_sessions[0].provider_id | uppercase }}</strong></p>
+      <p><strong>{{ vs.cart?.payment_sessions?.[0]?.provider_id | uppercase }}</strong></p>
       <!-- Display more details if available, e.g., last 4 digits of card -->
     </ion-card-content>
   </ion-card>

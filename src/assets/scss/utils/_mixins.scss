@@ -156,12 +156,6 @@
     }
 
     // Flexbox display
-    @mixin flexbox() {
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-    }
+    // Removed flexbox mixin - use native CSS flex instead
         
     

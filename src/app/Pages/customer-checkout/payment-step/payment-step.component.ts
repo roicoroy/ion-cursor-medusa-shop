@@ -75,7 +75,7 @@ export class PaymentStepComponent implements OnDestroy {
       });
       
       // Handle modal dismissal
-      modal.onDidDismiss().then(() => {
+      modal.onDidDismiss().then(async () => {
         console.log('Payment modal dismissed');
         const { CardPaymentModal } = await import('../../../Components/card-payment-modal/card-payment-modal');
         

@@ -62,7 +62,7 @@ export class PaymentStepComponent implements OnDestroy {
     if (secret_key != null) {
       this.modalOpen = true; // Set flag before creating modal
       
-      const { CardPaymentModal } = await import('../../Components/card-payment-modal/card-payment-modal');
+      const { CardPaymentModal } = await import('../../../Components/card-payment-modal/card-payment-modal');
       
       const modal = await this.modalController.create({
         component: CardPaymentModal,
@@ -77,7 +77,7 @@ export class PaymentStepComponent implements OnDestroy {
       // Handle modal dismissal
       modal.onDidDismiss().then(() => {
         console.log('Payment modal dismissed');
-        this.modalOpen = false; // Reset flag when modal is dismissed
+        const { CardPaymentModal } = await import('../../../Components/card-payment-modal/card-payment-modal');
         
         // Clear any existing payment session to ensure fresh session on next attempt
         this.store.dispatch(new CheckoutActions.UnSetSecretKey());

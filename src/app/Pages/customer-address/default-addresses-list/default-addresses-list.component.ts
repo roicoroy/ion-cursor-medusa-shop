@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, inject, OnChanges, SimpleChanges } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { IonButton, IonLabel, IonButtons, IonGrid, IonCardContent, IonRow, IonCol, IonCard, IonItem, IonIcon } from '@ionic/angular/standalone';
-import { AddressViewComponent } from "../../../components/address-view/address-view.component";
+import { AddressViewComponent } from "../../../Components/address-view/address-view.component";
 import { Router } from '@angular/router';
 import { AuthActions } from 'src/app/store/auth/auth.actions';
 import { MedusaCustomer } from 'src/app/shared/interfaces/customer-product.interface';

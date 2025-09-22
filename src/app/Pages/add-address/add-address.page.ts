@@ -9,7 +9,7 @@ import { IAppFacadeState, AppFacade } from '../../store/app.facade';
 import { MedusaAddress } from '../../shared/interfaces/medusa-address';
 import { NavigationService } from '../../shared/navigation/navigation.service';
 import { AlertService } from '../../shared/alert/alert.service';
-import { emailPatterRegex, nameRegex } from '../../Components/forms/extras/regexes.const';
+import { nameRegex } from 'src/app/shared/const/regexes.const';
 
 @Component({
   selector: 'app-add-address',
@@ -83,10 +83,10 @@ export class AddAddressPage implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.submitted = true;
-    
+
     if (this.addressForm.valid) {
       this.loading = true;
-      
+
       const addressData: MedusaAddress = {
         first_name: this.addressForm.value.first_name,
         last_name: this.addressForm.value.last_name,
@@ -99,7 +99,7 @@ export class AddAddressPage implements OnInit, OnDestroy {
       };
 
       this.store.dispatch(new AuthActions.AddACustomerAddress(addressData));
-      
+
       // Show success message and navigate back
       this.alert.presentSimpleAlertNavigate('Address Added Successfully!', 'customer-orders');
     } else {
@@ -147,4 +147,4 @@ export class AddAddressPage implements OnInit, OnDestroy {
       { code: 'no', name: 'Norway' }
     ];
   }
-} 
+}

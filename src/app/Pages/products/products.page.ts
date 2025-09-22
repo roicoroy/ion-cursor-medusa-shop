@@ -9,10 +9,10 @@ import { MedusaVariant } from '../../shared/interfaces/medusa-variant.interface'
 import { ProductsActions } from '../../store/products/products.actions';
 import { MedusaCartActions } from '../../store/medusa-cart/medusa-cart.actions';
 import { AppFacade } from '../../store/app.facade';
-import { ProductListComponent } from './products-components';
 import { RegionSelectComponent } from '../../components/region-select/region-select.component';
 import { AuthActions } from '../../store/auth/auth.actions';
 import { MedusaService } from '../../shared/api/medusa.service';
+import { ProductListComponent } from './products-components';
 
 @Component({
   selector: 'app-products',
@@ -70,21 +70,10 @@ export class ProductsPage implements OnInit, OnDestroy {
   }
 
   loadProducts() {
-    // this.loading = true;
     this.error = null;
 
     // Dispatch action to get products
     this.store.dispatch(new ProductsActions.GetProductsId());
-
-    // Add timeout to prevent infinite loading
-    // setTimeout(() => {
-
-    // }, 10000); // 10 second timeout
-
-    // if (this.loading) {
-    //   this.loading = false;
-    //   this.error = 'Loading timeout. Please try again.';
-    // }
   }
 
   addToCart(variant: MedusaVariant | undefined) {

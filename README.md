@@ -1,278 +1,131 @@
-# IonCursorMedusaShop
+# ion-cursor-medusa-shop
 
-## Project Description
-IonCursorMedusaShop is a cross-platform e-commerce application built with Ionic Angular that integrates with a Medusa.js backend for comprehensive e-commerce functionalities. It provides features such as user authentication, product browsing, shopping cart management, checkout processes, and user profile management. The application demonstrates a robust and scalable approach to building modern e-commerce experiences with a headless commerce platform.
+A comprehensive e-commerce application built with Ionic and Angular, powered by Medusa.js.
+
+## Table of Contents
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the Application](#running-the-application)
+- [Project Structure](#project-structure)
+- [Key Components and Pages](#key-components-and-pages)
+- [State Management](#state-management)
+- [API Integration](#api-integration)
+- [Styling](#styling)
+- [Internationalization (i18n)](#internationalization-i18n)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Features
-- **User Authentication** (Login, Registration, Google OAuth)
-- **Product Management** (Listing, Details, Categories, Search)
-- **Shopping Cart** (Add, Remove, Update quantities)
-- **Checkout Process** (Shipping, Payment, Order completion)
-- **User Profile Management** (Addresses, Personal details)
-- **Region and Currency Selection**
-- **Responsive Design** (Mobile-first approach)
-- **State Management** (NGXS for complex state handling)
-- **Animations** (Custom navigation animations)
 
-## Tech Stack
-- **Frontend Framework:** Ionic Angular 8
-- **UI Framework:** Ionic Components
-- **State Management:** NGXS (Next Generation State Management)
-- **HTTP Client:** Angular HttpClient with interceptors
-- **Styling:** SCSS with custom animations
-- **Build Tool:** Angular CLI
-- **Backend:** Medusa.js (Headless Commerce Platform)
-- **Payment:** Stripe integration
-- **Internationalization:** ngx-translate
+- User authentication (Login, Register, Logout)
+- Product listing and details
+- Shopping cart functionality
+- Checkout process (shipping, payment)
+- Address management
+- Order history
+- Profile management
+- Internationalization (i18n)
+- Responsive design with Ionic
 
-
-## Installation and Setup
+## Getting Started
 
 ### Prerequisites
-- Node.js 18+ and npm
-- Angular CLI 17+
-- Ionic CLI 7+
-- A running Medusa.js backend instance
-- Stripe account (for payment processing)
 
-### Steps
+Before you begin, ensure you have met the following requirements:
 
-1. **Clone the repository:**
-   ```bash
-   git clone <repository_url>
-   cd ion-cursor-medusa-shop
-   ```
+- Node.js (LTS version recommended)
+- npm or Yarn
+- Ionic CLI
+- A running Medusa.js backend (refer to [Medusa.js documentation](https://docs.medusajs.com/) for setup)
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+### Installation
 
-3. **Configure Environment:**
-   Create or update `src/environments/environment.ts` with your configuration:
-   ```typescript
-   export const environment = {
-     production: false,
-     STRIPE_PUBLISHABLE_KEY: 'your_stripe_publishable_key',
-     STRIPE_SECRET_KEY: 'your_stripe_secret_key',
-     MEDUSA_BACKEND_URL: 'http://localhost:9000',
-     MEDUSA_API_BASE_PATH: 'http://localhost:9000',
-     MEDUSA_PUBLISHABLE_KEY: 'your_medusa_publishable_key',
-     populate: '?populate=*',
-     revenueCatAppleKey: '',
-     revenueCatGoogleKey: ''
-   };
-   ```
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/your-repo/ion-cursor-medusa-shop.git
+    cd ion-cursor-medusa-shop
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+3.  Configure your Medusa.js backend URL in `src/environments/environment.ts`:
+    ```typescript
+    export const environment = {
+      production: false,
+      MEDUSA_API_URL: 'http://localhost:9000', // Replace with your Medusa backend URL
+      STRIPE_PUBLISHABLE_KEY: 'YOUR_STRIPE_PUBLISHABLE_KEY' // Replace with your Stripe public key
+    };
+    ```
 
-4. **Start the development server:**
-   ```bash
-   ionic serve
-   ```
+### Running the Application
 
-5. **For mobile development:**
-   ```bash
-   # Add platforms
-   ionic capacitor add ios
-   ionic capacitor add android
-   
-   # Build and sync
-   ionic build
-   ionic capacitor sync
-   
-   # Open in native IDEs
-   ionic capacitor open ios
-   ionic capacitor open android
-   ```
+To run the application in development mode:
 
-## Project Structure
-
-```
-src/
-├── app/
-│   ├── pages/                 # Application pages
-│   │   ├── cart/             # Shopping cart functionality
-│   │   ├── products/         # Product listing and details
-│   │   ├── tabs/             # Tab navigation
-│   │   └── ...
-│   ├── services/             # Angular services
-│   │   ├── cart.service.ts   # Cart management
-│   │   └── medusa-api.service.ts # API communication
-│   ├── shared/               # Shared components and utilities
-│   │   ├── api/              # API services
-│   │   ├── components/       # Reusable components
-│   │   ├── interfaces/       # TypeScript interfaces
-│   │   ├── navigation/       # Navigation service
-│   │   └── ...
-│   ├── store/                # NGXS state management
-│   │   ├── auth/             # Authentication state
-│   │   ├── products/         # Products state
-│   │   ├── medusa-cart/      # Cart state
-│   │   ├── checkout/         # Checkout state
-│   │   └── ...
-│   └── ...
-├── assets/                   # Static assets
-├── environments/             # Environment configuration
-└── theme/                    # Global styling
-```
-
-## Key Components
-
-### Services
-- **MedusaApiService:** Handles all API communication with Medusa backend
-- **CartService:** Manages shopping cart operations
-- **NavigationService:** Handles navigation with custom animations
-
-### State Management (NGXS)
-- **AuthState:** User authentication and session management
-- **ProductsState:** Product listing, categories, and selection
-- **MedusaCartState:** Shopping cart operations and state
-- **CheckoutState:** Checkout process and payment handling
-- **RegionsState:** Region and currency management
-
-### Interfaces
-- **Customer interfaces:** User data and authentication
-- **Product interfaces:** Product and variant data
-- **Cart interfaces:** Shopping cart and line items
-- **Payment interfaces:** Payment and shipping options
-
-## API Integration
-
-The application integrates with Medusa.js backend through RESTful APIs:
-
-- **Authentication:** `/auth/customer/*` endpoints
-- **Products:** `/store/products` endpoints
-- **Cart:** `/store/carts` endpoints
-- **Checkout:** `/store/checkout` endpoints
-- **Orders:** `/store/orders` endpoints
-
-## Features in Detail
-
-### Authentication
-- Email/password login and registration
-- Google OAuth integration
-- Session management with JWT tokens
-- Password reset functionality
-
-### Product Management
-- Product listing with pagination
-- Product details with variants
-- Category filtering
-- Search functionality
-- Product images and descriptions
-
-### Shopping Cart
-- Add/remove items
-- Quantity updates
-- Cart persistence
-- Real-time cart synchronization
-
-### Checkout Process
-- Shipping address management
-- Shipping method selection
-- Payment method integration (Stripe)
-- Order confirmation
-
-### User Profile
-- Personal information management
-- Address book (billing and shipping)
-- Order history
-- Account settings
-
-## Development
-
-### Running in Development Mode
 ```bash
 ionic serve
 ```
 
-### Building for Production
-```bash
-ionic build --prod
-```
+This will open the application in your default web browser.
 
-### Running Tests
-```bash
-ng test
-```
+## Project Structure
 
-### Code Quality
-```bash
-# Linting
-ng lint
+The project follows a standard Angular and Ionic project structure:
 
-# Formatting
-npm run format
-```
+- `src/app/`: Contains the core application logic.
+  - `components/`: Reusable UI components (e.g., `auth-component`, `footer`, `forms`).
+  - `pages/`: Application pages (e.g., `products`, `cart`, `customer-checkout`).
+  - `shared/`: Shared services, pipes, interfaces, and utilities.
+  - `store/`: NGXS state management modules.
+- `src/assets/`: Static assets like images, fonts, and i18n files.
+- `src/environments/`: Environment-specific configurations.
 
-## Mobile Development
+## Key Components and Pages
 
-### iOS
-```bash
-ionic capacitor add ios
-ionic capacitor sync ios
-ionic capacitor open ios
-```
+- **`AuthComponent`**: Handles user login, registration, and logout.
+- **`ProductListComponent`**: Displays a list of products.
+- **`ProductDetailsPage`**: Shows detailed information about a single product.
+- **`CartPage`**: Manages the shopping cart.
+- **`CustomerCheckoutPage`**: Guides the user through the checkout process.
+- **`AddressFormComponent`**: Reusable form for address input.
+- **`AppFooterComponent`**: Application footer.
 
-### Android
-```bash
-ionic capacitor add android
-ionic capacitor sync android
-ionic capacitor open android
-```
+## State Management
 
-## Environment Configuration
+This application uses [NGXS](https://www.ngxs.io/) for state management. Key state modules include:
 
-### Development
-- Backend URL: `http://localhost:9000`
-- Stripe test keys
-- Debug mode enabled
+- `AuthState`: Manages user authentication status.
+- `MedusaCartState`: Manages the shopping cart state.
+- `RegionsState`: Manages region and country data.
 
-### Production
-- Backend URL: Your deployed Medusa instance
-- Stripe live keys
-- Production optimizations
+## API Integration
+
+The application interacts with the Medusa.js backend via `MedusaService` (`src/app/shared/api/medusa.service.ts`). It uses Angular's `HttpClient` with interceptors for handling authentication and errors.
+
+## Styling
+
+The application uses Ionic's default styling with custom SCSS files for component-specific styles. Bootstrap classes have been removed and replaced with Ionic equivalents or custom CSS.
+
+## Internationalization (i18n)
+
+Internationalization is implemented using `@ngx-translate/core`. Translation files are located in `src/assets/i18n/`.
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions are welcome! Please follow the standard GitHub flow:
 
-## Troubleshooting
-
-### Common Issues
-
-1. **CORS Errors:** Ensure your Medusa backend has proper CORS configuration
-2. **Authentication Issues:** Check your Medusa publishable key configuration
-3. **Payment Errors:** Verify Stripe keys and webhook configuration
-4. **Build Errors:** Clear cache with `ionic capacitor clean`
-
-### Debug Mode
-Enable debug mode in `src/environments/environment.ts`:
-```typescript
-export const environment = {
-  production: false,
-  // ... other config
-};
-```
+1.  Fork the repository.
+2.  Create a new branch (`git checkout -b feature/your-feature-name`).
+3.  Make your changes.
+4.  Commit your changes (`git commit -m 'feat: Add new feature'`).
+5.  Push to the branch (`git push origin feature/your-feature-name`).
+6.  Open a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
-
-## Support
-
-For support and questions:
-- Create an issue in the repository
-- Check the Medusa.js documentation
-- Review Ionic Angular documentation
-
-## Acknowledgments
-
-- [Medusa.js](https://medusajs.com/) - Headless commerce platform
-- [Ionic](https://ionicframework.com/) - Cross-platform mobile development
-- [Angular](https://angular.io/) - Frontend framework
-- [NGXS](https://ngxs.io/) - State management
-- [Stripe](https://stripe.com/) - Payment processing 
+This project is licensed under the MIT License.

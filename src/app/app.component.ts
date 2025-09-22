@@ -29,8 +29,7 @@ import { AuthComponent } from './components/auth-component/auth.component';
     IonHeader,
     IonToolbar,
     IonTitle,
-    IonButtons,
-    AuthComponent
+    IonButtons
 ],
 })
 export class AppComponent implements OnInit {

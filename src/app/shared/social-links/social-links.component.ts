@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-social-links',
     templateUrl: './social-links.component.html',
     styleUrls: ['./social-links.component.scss'],
-    standalone: true
+    standalone: true,
+    imports: [
+      CommonModule
+    ]
 })
 export class SocialLinksComponent {
 

@@ -1,18 +1,26 @@
-import { AfterViewInit, Component, forwardRef, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { emailPatterRegex, nameRegex } from '../extras/regexes.const';
-import { AddressFormValue } from '../extras/models/address-form-value.interface';
-import { Store } from '@ngxs/store';
-import { IAppFacadeState, AppFacade } from 'src/app/store/app.facade';
-import { RegionsActions } from 'src/app/store/regions/regions.actions';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, inject, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonItem, IonList, IonLabel, IonInput } from "@ionic/angular/standalone";
-import { MaterialModule } from '../material.module';
-import { CountryPhone } from 'src/app/shared/interfaces/country-phone/country-phone.model';
-import { RegionSelectComponent } from '../../region-select/region-select.component';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonButton, IonIcon, IonCheckbox, IonText } from '@ionic/angular/standalone';
+import { Store } from '@ngxs/store';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { MedusaAddress } from '../../../shared/interfaces/medusa-address';
+import { RegionsState, NewCountryListModel } from '../../../store/regions/regions.state';
+import { RegionsActions } from '../../../store/regions/regions.actions';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgxsFormPluginModule } from '@ngxs/form-plugin';
+
+export interface AddressFormData {
+  first_name: string;
+  last_name: string;
+  address_1: string;
+  address_2?: string;
+  city: string;
+  country_code: string;
+  postal_code: string;
+  phone: string;
+  company?: string;
+  email?: string;
+}
 
 @Component({
   selector: 'app-address-form',
@@ -20,124 +28,228 @@ import { NgxsFormPluginModule } from '@ngxs/form-plugin';
   styleUrls: ['./address-form.component.scss'],
   standalone: true,
   imports: [
-    IonInput,
-    IonLabel,
-    RegionSelectComponent,
     CommonModule,
-    FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
     TranslateModule,
-    NgxsFormPluginModule,
     IonItem,
-    IonList
-],
+    IonLabel,
+    IonInput,
+    IonSelect,
+    IonSelectOption,
+    IonButton,
+    IonIcon,
+    IonCheckbox,
+    IonText
+  ],
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AddressFormComponent), multi: true }
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => AddressFormComponent),
+      multi: true
+    }
   ]
 })
-export class AddressFormComponent implements ControlValueAccessor, OnInit, OnDestroy, OnChanges, AfterViewInit {
+export class AddressFormComponent implements OnInit, OnDestroy, ControlValueAccessor {
+  @Input() addressType: 'billing' | 'shipping' | 'general' = 'general';
+  @Input() showEmail: boolean = false;
+  @Input() showCompany: boolean = false;
+  @Input() required: boolean = true;
+  @Input() initialData?: Partial<AddressFormData>;
+  @Input() disabled: boolean = false;
 
-  @Input() touched?: boolean;
+  @Output() formValid = new EventEmitter<boolean>();
+  @Output() formData = new EventEmitter<AddressFormData>();
 
-  @Input() isShippingTheSame?: boolean;
-
-  @Input() isRegisterForm?: boolean;
-
-  phoneNumberPlaceholder!: string;
-
-  emailRegex = emailPatterRegex;
-
-  addressForm!: FormGroup;;
-
-  viewState$!: Observable<IAppFacadeState>;
-
-  selectedCoutryCode!: string;
-
-  onChange: any = (_: AddressFormValue) => { };
-
-  onTouch: any = () => { };
-
-  formPath = 'form.addressForm';
+  addressForm!: FormGroup;
+  regionList$: Observable<NewCountryListModel[]>;
+  currentRegion$: Observable<NewCountryListModel>;
 
   private store = inject(Store);
-
-  private facade = inject(AppFacade);
-
-  private subscription = new Subscription();
-
   private fb = inject(FormBuilder);
+  private readonly ngUnsubscribe = new Subject<void>();
+
+  // ControlValueAccessor implementation
+  private onChange = (value: AddressFormData) => {};
+  private onTouched = () => {};
 
   constructor() {
-    this.viewState$ = this.facade.viewState$;
+    this.regionList$ = this.store.select(RegionsState.getRegionList);
+    this.currentRegion$ = this.store.select(RegionsState.getDefaultRegion);
+  }
+
+  ngOnInit(): void {
+    this.initializeForm();
+    this.setupFormSubscriptions();
+    this.loadRegions();
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
+  private initializeForm(): void {
+    const validators = this.required ? [Validators.required] : [];
+    const nameValidators = this.required ? [Validators.required, Validators.minLength(2)] : [Validators.minLength(2)];
+    const emailValidators = this.required ? [Validators.required, Validators.email] : [Validators.email];
 
     this.addressForm = this.fb.group({
-      email: [null, [Validators.required, Validators.pattern(emailPatterRegex)]],
-      first_name: [null, [Validators.required, Validators.pattern(nameRegex)]],
-      last_name: [null, [Validators.required, Validators.pattern(nameRegex)]],
-      address_1: [null, Validators.required],
-      address_2: [null],
-      country_code: [null, Validators.required],
-      city: [null, Validators.required],
-      postal_code: [null, Validators.required],
-      phone: [null, Validators.required]
+      first_name: ['', nameValidators],
+      last_name: ['', nameValidators],
+      address_1: ['', validators],
+      address_2: [''],
+      city: ['', validators],
+      country_code: ['', validators],
+      postal_code: ['', validators],
+      phone: ['', validators],
+      company: [''],
+      email: ['', this.showEmail ? emailValidators : []]
     });
-  }
-  
-  ngOnInit(): void {
-    // Optionally, you can initialize or fetch data here if needed in the future.
-    // Currently, all initialization is handled in the constructor and ngAfterViewInit.
-  }
-  
 
-  ngAfterViewInit(): void {
-    this.subscription.add(
-      this.addressForm.valueChanges.subscribe((value: any) => {
+    // Set initial data if provided
+    if (this.initialData) {
+      this.addressForm.patchValue(this.initialData);
+    }
+
+    // Set disabled state
+    if (this.disabled) {
+      this.addressForm.disable();
+    }
+  }
+
+  private setupFormSubscriptions(): void {
+    // Subscribe to form value changes
+    this.addressForm.valueChanges
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(value => {
+        this.formData.emit(value);
         this.onChange(value);
-      })
-    );
+      });
 
-    this.subscription.add(
-      this.viewState$
-        // .pipe(take(1))
-        .subscribe((vs) => {
-          // console.log(vs.defaultRegions);
-          this.selectedCoutryCode = vs.defaultRegions.country;
-          this.phoneNumberPlaceholder = this.buildPhoneNumberPlaceholder(vs.defaultRegions.country, vs.defaultRegions.label)
-          this.store.dispatch(new RegionsActions.SetSelectedCountry(vs.defaultRegions.region_id));
-          this.addressForm.get('country_code')?.setValue(vs.defaultRegions.country as string);
-        })
-    );
+    // Subscribe to form validity changes
+    this.addressForm.statusChanges
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(status => {
+        this.formValid.emit(status === 'VALID');
+      });
+
+    // Subscribe to current region changes
+    this.currentRegion$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(region => {
+        if (region?.country && !this.addressForm.get('country_code')?.value) {
+          this.addressForm.patchValue({ country_code: region.country });
+        }
+      });
   }
 
-  ngOnChanges(simpleChanges: SimpleChanges) {
-    if (simpleChanges['touched'] && simpleChanges['touched'].currentValue) {
-      this.addressForm?.markAllAsTouched();
+  private loadRegions(): void {
+    // Load regions if not already loaded
+    const regionList = this.store.selectSnapshot(RegionsState.getRegionList);
+    if (!regionList || regionList.length === 0) {
+      this.store.dispatch(new RegionsActions.GetCountries());
     }
   }
 
-  writeValue(value: any | AddressFormValue): void {
+  onCountryChange(event: any): void {
+    const selectedCountry = event.detail.value;
+    if (selectedCountry) {
+      this.store.dispatch(new RegionsActions.SetSelectedCountry(selectedCountry));
+    }
+  }
+
+  // ControlValueAccessor methods
+  writeValue(value: AddressFormData | null): void {
     if (value) {
-      this.addressForm.reset(value);
+      this.addressForm.patchValue(value);
     }
   }
 
-  registerOnChange(fn: () => {}): void {
+  registerOnChange(fn: (value: AddressFormData) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: (_: AddressFormValue) => {}): void {
-    this.onTouch = fn;
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  setDisabledState(isDisabled: boolean): void {
+    if (isDisabled) {
+      this.addressForm.disable();
+    } else {
+      this.addressForm.enable();
+    }
   }
 
-  private buildPhoneNumberPlaceholder(iso_2: any, name: string): string {
-    const string = new CountryPhone(iso_2, name);
-    const phoneNumberPlaceholder = `${string.code} ${string.sample_phone}`;
-    return phoneNumberPlaceholder;
+  // Validation helpers
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.addressForm.get(fieldName);
+    return !!(field && field.invalid && (field.dirty || field.touched));
   }
 
+  getFieldError(fieldName: string): string {
+    const field = this.addressForm.get(fieldName);
+    if (field?.errors) {
+      if (field.errors['required']) {
+        return `${this.getFieldLabel(fieldName)} is required`;
+      }
+      if (field.errors['email']) {
+        return 'Please enter a valid email address';
+      }
+      if (field.errors['minlength']) {
+        return `${this.getFieldLabel(fieldName)} must be at least ${field.errors['minlength'].requiredLength} characters`;
+      }
+    }
+    return '';
+  }
+
+  private getFieldLabel(fieldName: string): string {
+    const labels: { [key: string]: string } = {
+      first_name: 'First name',
+      last_name: 'Last name',
+      address_1: 'Address line 1',
+      address_2: 'Address line 2',
+      city: 'City',
+      country_code: 'Country',
+      postal_code: 'Postal code',
+      phone: 'Phone number',
+      company: 'Company',
+      email: 'Email'
+    };
+    return labels[fieldName] || fieldName;
+  }
+
+  // Public methods for parent components
+  markAllAsTouched(): void {
+    this.addressForm.markAllAsTouched();
+    this.onTouched();
+  }
+
+  reset(): void {
+    this.addressForm.reset();
+    if (this.initialData) {
+      this.addressForm.patchValue(this.initialData);
+    }
+  }
+
+  isValid(): boolean {
+    return this.addressForm.valid;
+  }
+
+  getValue(): AddressFormData {
+    return this.addressForm.value;
+  }
+
+  getFormattedAddress(): string {
+    const value = this.getValue();
+    const parts = [
+      `${value.first_name} ${value.last_name}`.trim(),
+      value.address_1,
+      value.address_2,
+      `${value.city}, ${value.postal_code}`.trim(),
+      value.country_code?.toUpperCase()
+    ].filter(part => part && part.trim());
+
+    return parts.join('\n');
+  }
 }

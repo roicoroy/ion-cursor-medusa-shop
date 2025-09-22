@@ -1,82 +1,153 @@
-<form [formGroup]="addressForm" [ngxsForm]="formPath">
-  <ion-list>
-    @if(isShippingTheSame === true || isRegisterForm === false){
-    <ion-item lines="none">
-      <ion-input formControlName="email" type="email" fill="solid" label="Email" labelPlacement="floating"
-        maxlength="30" [clearInput]="true">
-      </ion-input>
-    </ion-item>
-    @if(addressForm.get('email')?.hasError('required')){
-    {{ 'Enter a valid Email' }}
-    } @else if(addressForm.get('email')?.hasError('pattern')){
-    {{ 'ERRORS.REQUIRED' | translate }}
-    }
-    }
+<form [formGroup]="addressForm" class="address-form">
+  <!-- Email Field (conditional) -->
+  <ion-item *ngIf="showEmail" class="form-item">
+    <ion-label position="floating">{{ 'EMAIL' | translate }} *</ion-label>
+    <ion-input 
+      formControlName="email" 
+      type="email" 
+      placeholder="Enter email address"
+      [clearInput]="true">
+    </ion-input>
+  </ion-item>
+  <div class="error-message" *ngIf="showEmail && isFieldInvalid('email')">
+    {{ getFieldError('email') }}
+  </div>
 
-    <ion-item lines="none">
-      <ion-input formControlName="first_name" required maxlength="30" type="text" fill="outline"
-        [label]="'ADDRESS.FIRST_NAME' | translate" labelPlacement="floating" [clearInput]="true"></ion-input>
-      <p class="ion-error" *ngIf="addressForm.get('first_name')?.hasError('required')">
-        {{ 'ERRORS.REQUIRED' | translate }}
-      </p>
-      <p class="ion-error" *ngIf="addressForm.get('first_name')?.hasError('pattern')">
-        {{ 'ERRORS.PATTERN' | translate }}
-      </p>
+  <!-- Name Fields -->
+  <div class="name-row">
+    <ion-item class="form-item name-field">
+      <ion-label position="floating">{{ 'ADDRESS.FIRST_NAME' | translate }} *</ion-label>
+      <ion-input 
+        formControlName="first_name" 
+        type="text" 
+        placeholder="First name"
+        [clearInput]="true">
+      </ion-input>
     </ion-item>
+    
+    <ion-item class="form-item name-field">
+      <ion-label position="floating">{{ 'ADDRESS.LAST_NAME' | translate }} *</ion-label>
+      <ion-input 
+        formControlName="last_name" 
+        type="text" 
+        placeholder="Last name"
+        [clearInput]="true">
+      </ion-input>
+    </ion-item>
+  </div>
+  
+  <div class="error-row">
+    <div class="error-message" *ngIf="isFieldInvalid('first_name')">
+      {{ getFieldError('first_name') }}
+    </div>
+    <div class="error-message" *ngIf="isFieldInvalid('last_name')">
+      {{ getFieldError('last_name') }}
+    </div>
+  </div>
 
-    <ion-item>
-      <ion-input formControlName="last_name" required maxlength="30" type="text" fill="solid"
-        [label]="'ADDRESS.LAST_NAME' | translate" labelPlacement="floating" [clearInput]="true"></ion-input>
-      <p class="ion-error" *ngIf="addressForm.get('last_name')?.hasError('required')">
-        {{ 'ERRORS.REQUIRED' | translate }}
-      </p>
-      <p class="ion-error" *ngIf="addressForm.get('last_name')?.hasError('pattern')">
-        {{ 'ERRORS.PATTERN' | translate }}
-      </p>
-    </ion-item>
+  <!-- Company Field (conditional) -->
+  <ion-item *ngIf="showCompany" class="form-item">
+    <ion-label position="floating">{{ 'COMPANY' | translate }}</ion-label>
+    <ion-input 
+      formControlName="company" 
+      type="text" 
+      placeholder="Company name (optional)"
+      [clearInput]="true">
+    </ion-input>
+  </ion-item>
 
-    <ion-item>
-      <ion-input formControlName="address_1" required maxlength="30" type="text"
-        [label]="'ADDRESS.ADDRESS_LINE_1' | translate" labelPlacement="floating" [clearInput]="true">
+  <!-- Address Fields -->
+  <ion-item class="form-item">
+    <ion-label position="floating">{{ 'ADDRESS.ADDRESS_LINE_1' | translate }} *</ion-label>
+    <ion-input 
+      formControlName="address_1" 
+      type="text" 
+      placeholder="Street address"
+      [clearInput]="true">
+    </ion-input>
+  </ion-item>
+  <div class="error-message" *ngIf="isFieldInvalid('address_1')">
+    {{ getFieldError('address_1') }}
+  </div>
+
+  <ion-item class="form-item">
+    <ion-label position="floating">{{ 'ADDRESS.ADDRESS_LINE_2' | translate }}</ion-label>
+    <ion-input 
+      formControlName="address_2" 
+      type="text" 
+      placeholder="Apartment, suite, etc. (optional)"
+      [clearInput]="true">
+    </ion-input>
+  </ion-item>
+
+  <!-- City and Postal Code Row -->
+  <div class="city-postal-row">
+    <ion-item class="form-item city-field">
+      <ion-label position="floating">{{ 'ADDRESS.CITY' | translate }} *</ion-label>
+      <ion-input 
+        formControlName="city" 
+        type="text" 
+        placeholder="City"
+        [clearInput]="true">
       </ion-input>
-      <p class="ion-error" *ngIf="addressForm.get('address_1')?.hasError('required')">
-        {{ 'ERRORS.REQUIRED' | translate }}
-      </p>
     </ion-item>
-    <ion-item>
-      <ion-input formControlName="address_2" required maxlength="30" type="text" fill="outline"
-        [label]="'ADDRESS.ADDRESS_LINE_2' | translate" labelPlacement="floating" [clearInput]="true"></ion-input>
-    </ion-item>
-    @if(!isShippingTheSame){
-    <app-region-select></app-region-select>
-    } @else {
-    <ion-item>
-      <ion-label>Shipping and Billing addresses must be on the same country</ion-label>
-    </ion-item>
-    }
-    <ion-item>
-      <ion-input formControlName="city" required type="text" fill="outline" [label]="'City' | translate"
-        labelPlacement="floating" [clearInput]="true">
+    
+    <ion-item class="form-item postal-field">
+      <ion-label position="floating">{{ 'ADDRESS.POSTAL_CODE' | translate }} *</ion-label>
+      <ion-input 
+        formControlName="postal_code" 
+        type="text" 
+        placeholder="Postal code"
+        [clearInput]="true">
       </ion-input>
-      <p class="ion-error" *ngIf="addressForm.get('city')?.hasError('required')">
-        {{ 'ERRORS.REQUIRED' | translate }}
-      </p>
     </ion-item>
-    <ion-item>
-      <ion-input formControlName="postal_code" required type="text" fill="outline" [label]="'Post Code' | translate"
-        labelPlacement="floating" [clearInput]="true">
-      </ion-input>
-      <p class="ion-error" *ngIf="addressForm.get('postal_code')?.hasError('required')">
-        {{ 'ERRORS.REQUIRED' | translate }}
-      </p>
-    </ion-item>
-    <ion-item>
-      <ion-input formControlName="phone" required type="text" fill="outline" [label]="'ex: ' + phoneNumberPlaceholder"
-        labelPlacement="floating" [clearInput]="true">
-      </ion-input>
-      <p class="ion-error" *ngIf="addressForm.get('phone')?.hasError('required')">
-        {{ 'ERRORS.REQUIRED' | translate }}
-      </p>
-    </ion-item>
-  </ion-list>
+  </div>
+  
+  <div class="error-row">
+    <div class="error-message" *ngIf="isFieldInvalid('city')">
+      {{ getFieldError('city') }}
+    </div>
+    <div class="error-message" *ngIf="isFieldInvalid('postal_code')">
+      {{ getFieldError('postal_code') }}
+    </div>
+  </div>
+
+  <!-- Country Selection -->
+  <ion-item class="form-item">
+    <ion-label position="floating">{{ 'ADDRESS.COUNTRY' | translate }} *</ion-label>
+    <ion-select 
+      formControlName="country_code" 
+      placeholder="Select country"
+      (ionChange)="onCountryChange($event)">
+      <ion-select-option 
+        *ngFor="let region of regionList$ | async" 
+        [value]="region.country">
+        {{ region.label }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <div class="error-message" *ngIf="isFieldInvalid('country_code')">
+    {{ getFieldError('country_code') }}
+  </div>
+
+  <!-- Phone Field -->
+  <ion-item class="form-item">
+    <ion-label position="floating">{{ 'PHONE' | translate }} *</ion-label>
+    <ion-input 
+      formControlName="phone" 
+      type="tel" 
+      placeholder="Phone number"
+      [clearInput]="true">
+    </ion-input>
+  </ion-item>
+  <div class="error-message" *ngIf="isFieldInvalid('phone')">
+    {{ getFieldError('phone') }}
+  </div>
+
+  <!-- Form Actions (optional) -->
+  <div class="form-actions" *ngIf="addressType !== 'general'">
+    <ion-text color="medium" class="address-type-label">
+      <small>{{ addressType | titlecase }} Address</small>
+    </ion-text>
+  </div>
 </form>

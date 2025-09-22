@@ -1,8 +1,210 @@
-mat-form-field {
+// Address Form Component Styles
+
+.address-form {
   width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.ion-error {
-  font-size: 8px;
+// Form Items
+.form-item {
+  margin-bottom: 1rem;
+  --border-radius: 8px;
+  --border-width: 1px;
+  --border-color: var(--ion-color-medium);
+  --background: var(--ion-color-light);
+  
+  ion-label {
+    font-weight: 500;
+    color: var(--ion-color-dark);
+  }
+  
+  ion-input, ion-select {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    font-size: 16px;
+  }
+
+  &.item-has-focus {
+    --border-color: var(--ion-color-primary);
+    --background: var(--ion-color-primary-tint);
+  }
+
+  &.item-has-error {
+    --border-color: var(--ion-color-danger);
+    --background: var(--ion-color-danger-tint);
+  }
+}
+
+// Row Layouts
+.name-row,
+.city-postal-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  .name-field,
+  .city-field,
+  .postal-field {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  .postal-field {
+    flex: 0.6; // Postal code field is smaller
+  }
+}
+
+.error-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  .error-message {
+    flex: 1;
+
+    &:first-child {
+      margin-right: 0.25rem;
+    }
+
+    &:last-child {
+      margin-left: 0.25rem;
+    }
+  }
+}
+
+// Error Messages
+.error-message {
   color: var(--ion-color-danger);
+  font-size: 0.875rem;
+  margin: -0.5rem 0 0.5rem 1rem;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--ion-color-danger-tint);
+  border-radius: 4px;
+  border-left: 3px solid var(--ion-color-danger);
+  min-height: 1.5rem;
+  display: flex;
+  align-items: center;
+
+  &:empty {
+    display: none;
+  }
+}
+
+// Form Actions
+.form-actions {
+  margin-top: 1rem;
+  padding: 0.5rem 0;
+  text-align: center;
+
+  .address-type-label {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+// Select Styling
+ion-select {
+  --placeholder-color: var(--ion-color-medium);
+  --placeholder-opacity: 1;
+
+  &::part(icon) {
+    color: var(--ion-color-primary);
+  }
+}
+
+// Input Focus States
+ion-input:focus-within,
+ion-select:focus-within {
+  --border-color: var(--ion-color-primary);
+  --background: var(--ion-color-primary-tint);
+}
+
+// Validation States
+.ng-invalid.ng-touched {
+  --border-color: var(--ion-color-danger);
+  --background: var(--ion-color-danger-tint);
+}
+
+.ng-valid.ng-touched {
+  --border-color: var(--ion-color-success);
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .name-row,
+  .city-postal-row {
+    flex-direction: column;
+    gap: 0;
+
+    .name-field,
+    .city-field,
+    .postal-field {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .error-row {
+    flex-direction: column;
+    gap: 0;
+
+    .error-message {
+      margin: -0.5rem 0 0.5rem 1rem;
+
+      &:first-child,
+      &:last-child {
+        margin-left: 1rem;
+        margin-right: 0;
+      }
+    }
+  }
+
+  .form-item {
+    ion-input,
+    ion-select {
+      --padding-start: 10px;
+      --padding-end: 10px;
+      --padding-top: 10px;
+      --padding-bottom: 10px;
+      font-size: 14px;
+    }
+  }
+}
+
+// Dark Mode Support
+@media (prefers-color-scheme: dark) {
+  .form-item {
+    --background: var(--ion-color-dark);
+    --border-color: var(--ion-color-medium);
+  }
+  
+  ion-label {
+    color: var(--ion-color-light);
+  }
+}
+
+// Animation for form validation
+.form-item.ng-invalid.ng-touched {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+// Loading State
+.address-form.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+// Success State
+.address-form.success .form-item {
+  --border-color: var(--ion-color-success);
+  --background: var(--ion-color-success-tint);
 }

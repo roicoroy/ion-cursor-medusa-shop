@@ -1,9 +1,7 @@
 @use "src/theme/const.scss";
 @forward "swiper/css/bundle";
 @forward './assets/css/font-awesome-pro.css';
-@forward './assets/css/flaticon_shofy.css';
 @forward './assets/css/animate.css';
-@forward './assets/scss/main.scss';
 
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";

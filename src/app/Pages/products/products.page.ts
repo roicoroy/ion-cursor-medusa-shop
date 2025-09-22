@@ -11,6 +11,8 @@ import { MedusaCartActions } from '../../store/medusa-cart/medusa-cart.actions';
 import { AppFacade } from '../../store/app.facade';
 import { ProductListComponent } from './products-components';
 import { RegionSelectComponent } from '../../Components/region-select/region-select.component';
+import { AuthActions } from '../../store/auth/auth.actions';
+import { MedusaService } from '../../shared/api/medusa.service';
 
 @Component({
   selector: 'app-products',
@@ -43,6 +45,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 
   private store = inject(Store);
   private facade = inject(AppFacade);
+  private medusaApi = inject(MedusaService);
 
   constructor() {
     this.viewState$ = this.facade.viewState$;
@@ -88,6 +91,20 @@ export class ProductsPage implements OnInit, OnDestroy {
     if (variant) {
       // Dispatch action to add variant to cart using store
       this.store.dispatch(new MedusaCartActions.AddToMedusaCart(variant));
+    }
+  }
+
+  async logout() {
+    try {
+      const isLoggedIn = this.store.selectSnapshot((state: any) => state.auth?.isLoggedIn);
+      if (isLoggedIn) {
+        await this.medusaApi.medusaLogout();
+      }
+      this.store.dispatch(new AuthActions.AuthLogout());
+    } catch (error) {
+      console.error('Error during logout:', error);
+      // Force logout even if API call fails
+      this.store.dispatch(new AuthActions.AuthLogout());
     }
   }
 

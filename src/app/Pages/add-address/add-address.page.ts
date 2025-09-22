@@ -9,7 +9,7 @@ import { IAppFacadeState, AppFacade } from '../../store/app.facade';
 import { MedusaAddress } from '../../shared/interfaces/medusa-address';
 import { NavigationService } from '../../shared/navigation/navigation.service';
 import { AlertService } from '../../shared/alert/alert.service';
-import { nameRegex } from 'src/app/shared/const/regexes.const';
+import { nameRegex } from '../../shared/const/regexes.const';
 
 @Component({
   selector: 'app-add-address',

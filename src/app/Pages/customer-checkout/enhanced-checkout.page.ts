@@ -6,12 +6,12 @@ import { Store } from '@ngxs/store';
 import { MedusaCartActions } from 'src/app/store/medusa-cart/medusa-cart.actions';
 import { NavigationService } from 'src/app/shared/navigation/navigation.service';
 import { ModalController, AlertController } from '@ionic/angular/standalone';
-import { CardPaymentModal } from '../../Components/card-payment-modal/card-payment-modal';
+import { CardPaymentModal } from '../../components/card-payment-modal/card-payment-modal';
 import { CheckoutActions } from 'src/app/store/checkout/checkout.actions';
 import { CheckoutState } from 'src/app/store/checkout/checkout.state';
 import { MedusaCartState } from 'src/app/store/medusa-cart/medusa-cart.state';
 import { AppFacade, IAppFacadeState } from 'src/app/store/app.facade';
-import { CheckoutFormComponent, CheckoutFormData } from '../../Components/checkout-form/checkout-form.component';
+import { CheckoutFormComponent, CheckoutFormData } from '../../components/checkout-form/checkout-form.component';
 import { MedusaAddress } from '../../shared/interfaces/medusa-address';
 import { RegionsState } from 'src/app/store/regions/regions.state';
 

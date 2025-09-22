@@ -13,8 +13,8 @@ import { SharedModule } from 'src/app/shared';
 import { MedusaProductDetailsWrapperComponent } from './medusa-product-details-wrapper/medusa-product-details-wrapper.component';
 import { IAppFacadeState, AppFacade } from 'src/app/store/app.facade';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
-import { AppFooterComponent } from 'src/app/Components/footer/footer.component';
-import { CartButtonComponent } from 'src/app/Components/medusa-cart/cart-button/cart-button.component';
+import { AppFooterComponent } from 'src/app/components/footer/footer.component';
+import { CartButtonComponent } from 'src/app/components/medusa-cart/cart-button/cart-button.component';
 import { WishlistService } from 'src/app/shared/services/wishlist.service';
 import { finalize } from 'rxjs/operators';
 

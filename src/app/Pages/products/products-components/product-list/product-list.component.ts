@@ -66,7 +66,7 @@ export class ProductListComponent implements OnDestroy {
 
   async openLoginModal(): Promise<void> {
     try {
-      const { LoginComponent } = await import('../../../../Components/auth-component/login/login.component');
+      const { LoginComponent } = await import('../../../../components/auth-component/login/login.component');
       const modal = await this.modalCtrl.create({
         component: LoginComponent,
         cssClass: 'auth-modal',

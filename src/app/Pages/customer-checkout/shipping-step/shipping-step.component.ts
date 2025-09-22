@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { CheckoutActions } from 'src/app/store/checkout/checkout.actions';
 import { CheckoutState } from 'src/app/store/checkout/checkout.state';
-import { ShippingOptionsComponent } from "../../../Components/shipping-options/shipping-options.component";
+import { ShippingOptionsComponent } from "../../../components/shipping-options/shipping-options.component";
 import { NavigationService } from 'src/app/shared/navigation/navigation.service';
 
 @Component({

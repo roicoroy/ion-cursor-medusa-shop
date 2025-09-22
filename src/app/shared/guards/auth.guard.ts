@@ -4,7 +4,7 @@ import { Observable, map } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { AuthState } from 'src/app/store/auth/auth.state';
 import { ModalController } from '@ionic/angular/standalone';
-import { LoginComponent } from 'src/app/Components/auth-component/login-component/login-component';
+import { LoginComponent } from 'src/app/components/auth-component/login-component/login-component';
 
 @Injectable({
   providedIn: 'root'

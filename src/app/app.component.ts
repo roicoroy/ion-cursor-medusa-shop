@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { IonApp, IonRouterOutlet, IonHeader, IonToolbar, IonTitle, IonButtons } from '@ionic/angular/standalone';
 import { IconsService } from './shared/icons/icons.service';
 import { NavigationService } from './shared/navigation/navigation.service';
 import { fade, fadeWithZoom } from './shared/animations/animations';
@@ -12,6 +12,7 @@ import { AuthState } from './store/auth/auth.state';
 import { Store } from '@ngxs/store';
 import { MedusaProduct } from './shared/interfaces/customer-product.interface';
 import { Input } from '@angular/core';
+import { AuthComponent } from './components/auth-component/auth.component';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -24,12 +25,17 @@ import { Input } from '@angular/core';
   imports: [
     CommonModule,
     IonApp,
-    IonRouterOutlet
+    IonRouterOutlet,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    AuthComponent
 ],
 })
 export class AppComponent implements OnInit {
   currentUrl: any;
-  
+
   private medusaApi = inject(MedusaService);
   private readonly store = inject(Store);
   private icons = inject(IconsService);

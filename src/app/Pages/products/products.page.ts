@@ -10,7 +10,7 @@ import { ProductsActions } from '../../store/products/products.actions';
 import { MedusaCartActions } from '../../store/medusa-cart/medusa-cart.actions';
 import { AppFacade } from '../../store/app.facade';
 import { ProductListComponent } from './products-components';
-import { RegionSelectComponent } from '../../Components/region-select/region-select.component';
+import { RegionSelectComponent } from '../../components/region-select/region-select.component';
 import { AuthActions } from '../../store/auth/auth.actions';
 import { MedusaService } from '../../shared/api/medusa.service';
 

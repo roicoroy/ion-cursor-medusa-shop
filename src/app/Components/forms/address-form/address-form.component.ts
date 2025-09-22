@@ -35,11 +35,8 @@ export interface AddressFormData {
     IonInput,
     IonSelect,
     IonSelectOption,
-    IonButton,
-    IonIcon,
-    IonCheckbox,
     IonText
-  ],
+],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

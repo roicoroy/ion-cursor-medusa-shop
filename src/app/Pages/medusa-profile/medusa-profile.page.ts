@@ -12,7 +12,7 @@ import { DefaultAddressesViewComponent } from "../customer-address/default-addre
 import { CustomerDetailsFormComponent } from "../customer-address/customer-details-form/customer-details-form.component";
 import { OverlayEventDetail } from '@ionic/core';
 import { takeUntil } from 'rxjs/operators';
-import { AppFooterComponent } from "../../Components/footer/footer.component";
+import { AppFooterComponent } from "../../components/footer/footer.component";
 
 
 export interface OrderIdParam {

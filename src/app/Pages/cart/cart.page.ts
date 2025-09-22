@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { MedusaCartComponent } from '../../Components/medusa-cart/medusa-cart/medusa-cart.component';
-import { RegionSelectComponent } from '../../Components/region-select/region-select.component';
+import { MedusaCartComponent } from '../../components/medusa-cart/medusa-cart/medusa-cart.component';
+import { RegionSelectComponent } from '../../components/region-select/region-select.component';
 
 @Component({
   selector: 'app-cart',

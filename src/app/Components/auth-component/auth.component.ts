@@ -33,7 +33,7 @@ import { LoginComponent } from './login/login.component';
     ReactiveFormsModule,
     FormsModule,
     TranslateModule
-  ]
+]
 })
 export class AuthComponent implements OnInit {
   // Public observables for template

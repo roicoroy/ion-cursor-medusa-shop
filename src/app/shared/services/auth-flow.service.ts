@@ -6,7 +6,7 @@ import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { AuthState } from 'src/app/store/auth/auth.state';
 import { AuthActions } from 'src/app/store/auth/auth.actions';
-import { LoginComponent } from 'src/app/Components/auth-component';
+import { LoginComponent } from 'src/app/components/auth-component';
 
 @Injectable({
   providedIn: 'root'

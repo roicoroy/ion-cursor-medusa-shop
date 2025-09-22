@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { KeypadModule } from 'src/app/shared/native/keyboard/keypad.module';
-import { ShowHidePasswordComponent } from 'src/app/Components/show-hide-password/show-hide-password.component';
+import { ShowHidePasswordComponent } from 'src/app/components/show-hide-password/show-hide-password.component';
 import { IonInput, IonContent, IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, ModalController, MenuController, IonSpinner } from '@ionic/angular/standalone';
 import { Store } from '@ngxs/store';
 import { Observable, Subject, takeUntil } from 'rxjs';

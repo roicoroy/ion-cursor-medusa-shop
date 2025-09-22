@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SocialLinksComponent } from "../social-links/social-links.component";
+import { SocialLinksComponent } from 'src/app/shared/social-links/social-links.component';
 
 @Component({
   selector: 'app-footer',

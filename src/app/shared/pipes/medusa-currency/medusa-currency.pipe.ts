@@ -16,12 +16,13 @@ export class MedusaCurrency implements PipeTransform {
         // Get the current selected region
         const currentRegion = this.store.selectSnapshot(RegionsState.getDefaultRegion);
         const regionCurrency = currentRegion?.currency_code || 'usd';
-        
+
         // Use the provided currency_code if available, otherwise use the region's currency
         const currencyToUse = currency_code || regionCurrency;
-        
+
         let symbolValue: string;
-        
+
+
         switch (currencyToUse.toLowerCase()) {
             case ServerRegions.unitedKingdom:
                 symbolValue = `${ServerRegionsSymbols.unitedKingdom} ${value}`;

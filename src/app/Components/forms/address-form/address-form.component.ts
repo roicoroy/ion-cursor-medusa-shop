@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, ControlValueAc
 import { IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonButton, IonIcon, IonCheckbox, IonText } from '@ionic/angular/standalone';
 import { Store } from '@ngxs/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { MedusaAddress } from '../../../shared/interfaces/medusa-address';
 import { RegionsState, NewCountryListModel } from '../../../store/regions/regions.state';
 import { RegionsActions } from '../../../store/regions/regions.actions';
 import { TranslateModule } from '@ngx-translate/core';

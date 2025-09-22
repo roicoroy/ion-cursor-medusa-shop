@@ -9,10 +9,10 @@ import { Store } from '@ngxs/store';
 import { MedusaService } from 'src/app/shared/api/medusa.service';
 import { AuthActions } from 'src/app/store/auth/auth.actions';
 import { AuthState } from 'src/app/store/auth/auth.state';
-import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { NavigationService } from 'src/app/shared/navigation/navigation.service';
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-auth',
@@ -23,7 +23,7 @@ import { NavigationService } from 'src/app/shared/navigation/navigation.service'
     IonButtons,
     IonButton,
     IonIcon,
-    IonLabel, 
+    IonLabel,
     IonPopover,
     IonContent,
     IonList,
@@ -64,9 +64,9 @@ export class AuthComponent implements OnInit {
         backdropDismiss: false,
         showBackdrop: true
       });
-      
+
       await modal.present();
-      
+
       // Listen for modal dismissal
       modal.onWillDismiss().then(() => {
         console.log('Login modal dismissed');
@@ -87,9 +87,9 @@ export class AuthComponent implements OnInit {
         backdropDismiss: false,
         showBackdrop: true
       });
-      
+
       await modal.present();
-      
+
       // Listen for modal dismissal
       modal.onWillDismiss().then(() => {
         console.log('Register modal dismissed');
@@ -109,7 +109,7 @@ export class AuthComponent implements OnInit {
         await this.medusaApi.medusaLogout();
       }
       this.store.dispatch(new AuthActions.AuthLogout());
-      
+
       // Navigate to products page after logout
       this.navigationService.navigateTo('/tabs/products');
     } catch (error) {
@@ -138,4 +138,4 @@ export class AuthComponent implements OnInit {
   navigateToAddresses(): void {
     this.navigationService.navigateTo('customer-address');
   }
-} 
+}

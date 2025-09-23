@@ -13,6 +13,7 @@ import { RegionSelectComponent } from '../../components/region-select/region-sel
 import { AuthActions } from '../../store/auth/auth.actions';
 import { MedusaService } from '../../shared/api/medusa.service';
 import { ProductListComponent } from './products-components';
+import { AuthComponent } from "src/app/components/auth-component";
 
 @Component({
   selector: 'app-products',
@@ -30,8 +31,9 @@ import { ProductListComponent } from './products-components';
     IonButton,
     CommonModule,
     ProductListComponent,
-    RegionSelectComponent
-  ]
+    RegionSelectComponent,
+    AuthComponent
+]
 })
 export class ProductsPage implements OnInit, OnDestroy {
   private readonly ngUnsubscribe = new Subject();

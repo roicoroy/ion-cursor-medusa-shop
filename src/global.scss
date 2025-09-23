@@ -44,6 +44,10 @@
     }
 }
 
+.image-modal-fullscreen {
+  --background: rgba(0, 0, 0, 0.8);
+}
+
 // ion-modal::part(backdrop) {
 //     background: var(--ion-color-primary);
 //     opacity: 1;

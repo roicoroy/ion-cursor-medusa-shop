@@ -16,6 +16,7 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { AppFooterComponent } from 'src/app/components/footer/footer.component';
 import { CartButtonComponent } from 'src/app/components/medusa-cart/cart-button/cart-button.component';
 import { WishlistService } from 'src/app/shared/services/wishlist.service';
+import { ImageModalService } from 'src/app/shared/services/image-modal/image-modal.service';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -47,12 +48,13 @@ export class ProductDetailsPage implements OnDestroy, OnInit {
   @ViewChild('swiper') swiperRef: ElementRef | undefined;
 
   swiper!: Swiper;
-  public alertController = inject(AlertController);
+  private alertController = inject(AlertController);
 
   private store = inject(Store);
   private _location = inject(Location);
   private activatedRoute = inject(ActivatedRoute);
   private wishlistService = inject(WishlistService);
+  private imageModalService = inject(ImageModalService);
 
   private loading = inject(LoadingService);
 
@@ -100,6 +102,10 @@ export class ProductDetailsPage implements OnDestroy, OnInit {
   handleImageActive(url: string | any) {
     this.activeImg = '';
     this.activeImg = url;
+  }
+
+  openImage(imageUrl: string) {
+    this.imageModalService.openImageModal(imageUrl);
   }
 
   navigateBack() {

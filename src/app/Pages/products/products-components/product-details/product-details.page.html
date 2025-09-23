@@ -29,7 +29,7 @@
                     <div class="product-images-section">
                         <!-- Main Image -->
                         <div class="main-image-container">
-                            <img [src]="activeImg" alt="Product Image" class="main-product-image" />
+                            <img [src]="activeImg" alt="Product Image" class="main-product-image" (click)="openImage(activeImg)" />
                         </div>
 
                         <!-- Thumbnail Images -->

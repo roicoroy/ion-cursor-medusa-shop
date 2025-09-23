@@ -11,7 +11,50 @@
 <ion-content [fullscreen]="true">
   <div class="register-container">
     <h2>Register</h2>
-    <p>Registration functionality coming soon...</p>
-    <ion-button (click)="dismiss()">Close</ion-button>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <ion-list>
+        <ion-item>
+          <ion-input label="First Name" type="text" formControlName="firstName" placeholder="Enter your first name"></ion-input>
+        </ion-item>
+        <ion-note *ngIf="registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)" color="danger">
+          <span *ngIf="registerForm.get('firstName')?.errors?.['required']">{{ validation_messages.firstName[0].message }}</span>
+        </ion-note>
+
+        <ion-item>
+          <ion-input label="Last Name" type="text" formControlName="lastName" placeholder="Enter your last name"></ion-input>
+        </ion-item>
+        <ion-note *ngIf="registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)" color="danger">
+          <span *ngIf="registerForm.get('lastName')?.errors?.['required']">{{ validation_messages.lastName[0].message }}</span>
+        </ion-note>
+
+        <ion-item>
+          <ion-input label="Email" type="email" formControlName="email" placeholder="Enter your email"></ion-input>
+        </ion-item>
+        <ion-note *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)" color="danger">
+          <span *ngIf="registerForm.get('email')?.errors?.['required']">{{ validation_messages.email[0].message }}</span>
+          <span *ngIf="registerForm.get('email')?.errors?.['pattern']">{{ validation_messages.email[1].message }}</span>
+        </ion-note>
+
+        <ion-item>
+          <ion-input label="Password" type="password" formControlName="password" placeholder="Enter your password"></ion-input>
+        </ion-item>
+        <ion-note *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)" color="danger">
+          <span *ngIf="registerForm.get('password')?.errors?.['required']">{{ validation_messages.password[0].message }}</span>
+          <span *ngIf="registerForm.get('password')?.errors?.['minlength']">{{ validation_messages.password[1].message }}</span>
+        </ion-note>
+
+        <ion-item>
+          <ion-input label="Confirm Password" type="password" formControlName="confirmPassword" placeholder="Confirm your password"></ion-input>
+        </ion-item>
+        <ion-note *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)" color="danger">
+          <span *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">{{ validation_messages.confirmPassword[0].message }}</span>
+        </ion-note>
+        <ion-note *ngIf="registerForm.errors?.['passwordMismatch'] && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)" color="danger">
+          <span>{{ validation_messages.passwordMismatch[0].message }}</span>
+        </ion-note>
+      </ion-list>
+
+      <ion-button expand="block" type="submit" [disabled]="registerForm.invalid">Register</ion-button>
+    </form>
   </div>
 </ion-content> 

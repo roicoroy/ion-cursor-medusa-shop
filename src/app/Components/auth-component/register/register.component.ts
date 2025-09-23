@@ -35,30 +35,31 @@ export class RegisterComponent implements OnInit {
 
   // Public properties
   public viewState$!: Observable<IAppFacadeState>;
-  public formPath = 'auth.signupForm';
-  public signupForm!: FormGroup;
-  public matching_passwords_group!: FormGroup;
+  public registerForm!: FormGroup;
   public loading = false;
   public error: string | null = null;
   public submitted = false;
 
   // Validation messages
   public validation_messages = {
+    'firstName': [
+      { type: 'required', message: 'First Name is required.' }
+    ],
+    'lastName': [
+      { type: 'required', message: 'Last Name is required.' }
+    ],
     'email': [
       { type: 'required', message: 'Email is required.' },
       { type: 'pattern', message: 'Enter a valid email.' }
-    ],
-    'username': [
-      { type: 'required', message: 'Username is required.' },
     ],
     'password': [
       { type: 'required', message: 'Password is required.' },
       { type: 'minlength', message: 'Password must be at least 5 characters long.' }
     ],
-    'confirm_password': [
+    'confirmPassword': [
       { type: 'required', message: 'Confirm password is required' }
     ],
-    'matching_passwords': [
+    'passwordMismatch': [
       { type: 'areNotEqual', message: 'Password mismatch' }
     ]
   };
@@ -83,30 +84,28 @@ export class RegisterComponent implements OnInit {
    * Initialize the registration forms
    */
   private initForms(): void {
-    this.matching_passwords_group = new FormGroup({
-      'password': new FormControl('', Validators.compose([
-        Validators.minLength(5),
-        Validators.required
-      ])),
-      'confirm_password': new FormControl('', Validators.required)
-    }, (formGroup: FormGroup | any) => {
-      return PasswordValidator.areNotEqual(formGroup);
-    });
-
-    this.signupForm = new FormGroup({
-      'email': new FormControl('', Validators.compose([
+    this.registerForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-      ])),
-      'matching_passwords': this.matching_passwords_group,
+      ])],
+      password: ['', Validators.compose([
+        Validators.minLength(5),
+        Validators.required
+      ])],
+      confirmPassword: ['', Validators.required]
+    }, {
+      validators: [PasswordValidator.areNotEqual]
     });
   }
 
   /**
    * Handle form submission
    */
-  async onSubmit(): Promise<void> {
-    if (this.signupForm.invalid || this.registerAddressForm.invalid) {
+  async register(): Promise<void> {
+    if (this.registerForm.invalid || this.registerAddressForm.invalid) {
       this.markFormsTouched();
       return;
     }
@@ -124,10 +123,10 @@ export class RegisterComponent implements OnInit {
 
       const address: MedusaAddress = addressValue;
       const registerPayload: RegisterPayload = {
-        first_name: 'User', // TODO: Add first name field
-        last_name: 'User',  // TODO: Add last name field
-        email: this.signupForm.value.email,
-        password: this.matching_passwords_group.value.password
+        first_name: this.registerForm.value.firstName,
+        last_name: this.registerForm.value.lastName,
+        email: this.registerForm.value.email,
+        password: this.registerForm.value.password
       };
 
       this.store.dispatch(new AuthActions.Register(registerPayload, address))
@@ -157,8 +156,8 @@ export class RegisterComponent implements OnInit {
    * Mark all form controls as touched for validation display
    */
   private markFormsTouched(): void {
-    Object.keys(this.signupForm.controls).forEach(key => {
-      const control = this.signupForm.get(key);
+    Object.keys(this.registerForm.controls).forEach(key => {
+      const control = this.registerForm.get(key);
       control?.markAsTouched();
     });
 
@@ -179,7 +178,7 @@ export class RegisterComponent implements OnInit {
    * Reset the forms
    */
   onReset(): void {
-    this.signupForm.reset();
+    this.registerForm.reset();
     this.registerAddressForm.reset();
     this.submitted = false;
   }

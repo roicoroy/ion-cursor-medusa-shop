@@ -23,6 +23,7 @@ import { AuthComponent } from './components/auth-component/auth.component';
     fadeWithZoom()
   ],
   imports: [
+    AuthComponent,
     CommonModule,
     IonApp,
     IonRouterOutlet,

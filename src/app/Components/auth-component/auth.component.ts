@@ -15,7 +15,7 @@ import { NavigationService } from 'src/app/shared/navigation/navigation.service'
 import { LoginComponent } from './login/login.component';
 
 @Component({
-  selector: 'app-auth',
+  selector: 'app-auth-component',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
   standalone: true,

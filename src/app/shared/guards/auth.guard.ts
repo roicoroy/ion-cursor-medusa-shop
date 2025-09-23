@@ -4,7 +4,7 @@ import { Observable, map } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { AuthState } from 'src/app/store/auth/auth.state';
 import { ModalController } from '@ionic/angular/standalone';
-import { LoginComponent } from 'src/app/components/auth-component/login-component/login-component';
+import { LoginComponent } from 'src/app/components/auth-component';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +13,26 @@ export class AuthGuard implements CanActivate {
   private store = inject(Store);
   private router = inject(Router);
   private modalCtrl = inject(ModalController);
+  private isModalPresented = false;
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
+    console.log('AuthGuard: canActivate called');
     return this.store.select(AuthState.isLoggedIn).pipe(
       map(isLoggedIn => {
+        console.log('AuthGuard: isLoggedIn is', isLoggedIn);
         if (isLoggedIn) {
+          this.isModalPresented = false; // Reset flag
+          console.log('AuthGuard: User is logged in, allowing access');
           return true;
         } else {
-          // User is not logged in, show login modal
-          this.showLoginModal(state.url);
+          console.log('AuthGuard: User is not logged in, showing login modal');
+          if (!this.isModalPresented) { // Check flag
+            this.isModalPresented = true; // Set flag
+            this.showLoginModal(state.url);
+          }
           return false;
         }
       })
@@ -42,11 +50,12 @@ export class AuthGuard implements CanActivate {
           returnUrl: returnUrl
         }
       });
-      
+
       await modal.present();
-      
+
       // Listen for modal dismissal
       modal.onWillDismiss().then(() => {
+        this.isModalPresented = false; // Reset flag
         const isLoggedIn = this.store.selectSnapshot(AuthState.isLoggedIn);
         if (isLoggedIn) {
           // User logged in successfully, navigate to the intended route
@@ -58,7 +67,8 @@ export class AuthGuard implements CanActivate {
       });
     } catch (error) {
       console.error('Error showing login modal:', error);
+      this.isModalPresented = false; // Reset flag
       this.router.navigate(['/tabs/products']);
     }
   }
-} 
+}

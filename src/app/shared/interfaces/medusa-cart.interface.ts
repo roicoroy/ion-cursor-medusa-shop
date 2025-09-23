@@ -1,5 +1,6 @@
 import { MedusaAddress } from "./medusa-address";
 
+
 export interface MedusaCart {
   id: string;
   promotions?: any,

@@ -127,10 +127,18 @@ export class AuthState {
                     }
                 } catch (customerError) {
                     console.error('Error getting customer:', customerError);
+                    return ctx.patchState({
+                        isLoggedIn: false,
+                        customer: null,
+                    });
                 }
             }
         } catch (error) {
             console.error('Error getting session:', error);
+            return ctx.patchState({
+                isLoggedIn: false,
+                customer: null,
+            });
         }
     }
 

@@ -20,8 +20,8 @@
   <form [formGroup]="customerAddressForm" [ngxsForm]="formPath">
     <ion-col>
       <p>Address</p>
-      <app-customer-address-form formControlName="address" [touched]="customerAddressForm.get('address')!.touched">
-      </app-customer-address-form>
+      <app-address-form formControlName="address">
+      </app-address-form>
     </ion-col>
     <ion-item>
       <ion-buttons slot="start">

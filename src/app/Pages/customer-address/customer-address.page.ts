@@ -7,10 +7,10 @@ import { IAppFacadeState, AppFacade } from 'src/app/store/app.facade';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthActions } from '../../store/auth/auth.actions';
 import { NavigationService } from '../../shared/navigation/navigation.service';
-import { DefaultAddressesViewComponent } from "./default-addresses-view/default-addresses-view.component";
-import { DefaultAddressesListComponent } from "./default-addresses-list/default-addresses-list.component";
 import { IonModal } from '@ionic/angular/standalone';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { DefaultAddressesListComponent } from './default-addresses-list/default-addresses-list.component';
+import { DefaultAddressesViewComponent } from './default-addresses-view/default-addresses-view.component';
 
 @Component({
   selector: 'app-customer-address',
@@ -48,7 +48,7 @@ export class CustomerAddressPage {
   addNewAddress() {
     this.nav.navigateTo('add-address');
   }
-  
+
   back() {
     this.nav.goBack();
   }

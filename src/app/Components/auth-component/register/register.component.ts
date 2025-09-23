@@ -11,8 +11,8 @@ import { AppFacade, IAppFacadeState } from 'src/app/store/app.facade';
 import { ModalController } from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
 import { RegisterPayload } from 'src/app/shared/interfaces/auth.interface';
-import { MedusaAddress } from 'src/app/shared/interfaces/medusa-address';
 import { AuthActions } from 'src/app/store/auth/auth.actions';
+import { MedusaAddress } from 'src/app/shared/interfaces/medusa-address';
 
 @Component({
   selector: 'app-register',
@@ -187,4 +187,4 @@ export class RegisterComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-} 
+}

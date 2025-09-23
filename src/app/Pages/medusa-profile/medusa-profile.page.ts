@@ -7,12 +7,12 @@ import { NavigationService } from '../../shared/navigation/navigation.service';
 import { Store } from '@ngxs/store';
 import { IAppFacadeState, AppFacade } from '../../store/app.facade';
 import { AuthActions } from '../../store/auth/auth.actions';
-import { DefaultAddressesListComponent } from "../customer-address/default-addresses-list/default-addresses-list.component";
-import { DefaultAddressesViewComponent } from "../customer-address/default-addresses-view/default-addresses-view.component";
-import { CustomerDetailsFormComponent } from "../customer-address/customer-details-form/customer-details-form.component";
 import { OverlayEventDetail } from '@ionic/core';
 import { takeUntil } from 'rxjs/operators';
 import { AppFooterComponent } from "../../components/footer/footer.component";
+import { CustomerDetailsFormComponent } from '../customer-address/customer-details-form/customer-details-form.component';
+import { DefaultAddressesListComponent } from '../customer-address/default-addresses-list/default-addresses-list.component';
+import { DefaultAddressesViewComponent } from '../customer-address/default-addresses-view/default-addresses-view.component';
 
 
 export interface OrderIdParam {

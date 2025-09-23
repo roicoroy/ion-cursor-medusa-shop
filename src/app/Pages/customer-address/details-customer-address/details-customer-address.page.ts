@@ -11,9 +11,9 @@ import { AuthActions } from 'src/app/store/auth/auth.actions';
 import { MedusaService } from 'src/app/shared/api/medusa.service';
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { NewCountryListModel } from 'src/app/store/regions/regions.state';
-import { CustomerAddressFormComponent } from 'src/app/components/forms/customer-address-form/customer-address-form.component';
 import { ActivatedRoute } from '@angular/router';
 import { RegionsActions } from 'src/app/store/regions/regions.actions';
+import { AddressFormComponent } from 'src/app/components/forms';
 
 @Component({
   selector: 'app-details-customer-address',
@@ -29,7 +29,7 @@ import { RegionsActions } from 'src/app/store/regions/regions.actions';
     FormsModule,
     ReactiveFormsModule,
     NgxsFormPluginModule,
-    CustomerAddressFormComponent,
+    AddressFormComponent,
   ],
 })
 export class DetailsCustomerAddressPage implements AfterViewInit {
@@ -140,11 +140,11 @@ export class DetailsCustomerAddressPage implements AfterViewInit {
     }));
     this.store.dispatch(new RegionsActions.SetSelectedCountry(address.country_code))
   }
-  // 
+  //
   onReset() {
     this.customerAddressForm.reset();
   }
-  // 
+  //
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

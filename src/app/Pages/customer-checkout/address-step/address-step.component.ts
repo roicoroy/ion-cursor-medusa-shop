@@ -10,9 +10,9 @@ import { AlertController } from '@ionic/angular/standalone';
 import { CheckoutActions } from 'src/app/store/checkout/checkout.actions';
 import { MedusaCartState } from 'src/app/store/medusa-cart/medusa-cart.state';
 import { AppFacade, IAppFacadeState } from 'src/app/store/app.facade';
-import { DefaultAddressesViewComponent } from "../../customer-address/default-addresses-view/default-addresses-view.component";
-import { MedusaAddress } from 'src/app/shared/interfaces/medusa-address';
 import { RegionsState } from 'src/app/store/regions/regions.state';
+import { MedusaAddress } from 'src/app/Shared/interfaces/medusa-address';
+import { DefaultAddressesViewComponent } from '../../customer-address/default-addresses-view/default-addresses-view.component';
 
 @Component({
   selector: 'app-address-step',

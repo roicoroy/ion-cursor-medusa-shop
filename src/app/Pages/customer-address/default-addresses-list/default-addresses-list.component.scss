@@ -1,81 +1,131 @@
-// Address List Styles
+/* Default Addresses List Component Styles */
+
+// Main container for the address list
+.address-list-container {
+  padding: 8px;
+}
+
+// Individual address card styling
 ion-card {
-  margin: 0.5rem 0;
-  transition: all 0.3s ease;
+  margin: 16px 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease-in-out;
+  border: 1px solid var(--ion-color-step-150, #e0e0e0);
 
-  ion-item {
-    --padding-start: 1rem;
-    --padding-end: 1rem;
-  }
-
-  ion-card-content {
-    padding: 1rem;
-  }
-}
-
-// Button transitions for smooth color changes
-ion-button {
-  transition: all 0.3s ease;
-
-  &[color="success"] {
-    --background: var(--ion-color-success);
-    --color: var(--ion-color-success-contrast);
-  }
-
-  &[color="medium"] {
-    --background: var(--ion-color-medium);
-    --color: var(--ion-color-medium-contrast);
-  }
-
-  ion-icon {
-    margin-right: 0.5rem;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
   }
 }
 
-// Prevent layout shifts
-ion-grid {
-  ion-row {
-    margin: 0;
-
-    ion-col {
-      padding: 0.25rem;
-    }
-  }
+// Card content padding
+ion-card-content {
+  padding: 16px;
 }
 
-// Address view container
+// Address view component container
 app-address-view {
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
 }
 
-// Action buttons
-ion-buttons {
-  ion-button {
-    --color: var(--ion-color-primary);
-    font-size: 0.875rem;
+// Action buttons container
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--ion-color-step-150, #e0e0e0);
+}
 
-    &:hover {
-      --background: var(--ion-color-primary-tint);
+// General button styling
+ion-button {
+  --border-radius: 8px;
+  --box-shadow: none;
+  font-weight: 600;
+  text-transform: none;
+  transition: all 0.2s ease-in-out;
+
+  ion-icon {
+    margin-right: 6px;
+  }
+}
+
+// Edit button styling
+.edit-button {
+  --color: var(--ion-color-primary);
+  --background: transparent;
+  --border-color: var(--ion-color-primary);
+  --border-width: 1px;
+
+  &:hover {
+    --background: var(--ion-color-primary-tint);
+  }
+}
+
+// Delete button styling
+.delete-button {
+  --color: var(--ion-color-danger);
+  --background: transparent;
+
+  &:hover {
+    --background: var(--ion-color-danger-tint);
+    --color: var(--ion-color-danger);
+  }
+}
+
+// Default selection buttons
+.default-selection {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+
+  ion-button {
+    flex: 1;
+    --padding-start: 12px;
+    --padding-end: 12px;
+  }
+
+  .set-default-button {
+    --background: var(--ion-color-light);
+    --color: var(--ion-color-dark);
+    --border-color: var(--ion-color-step-400);
+    --border-width: 1px;
+
+    &.is-default {
+      --background: var(--ion-color-success);
+      --color: var(--ion-color-success-contrast);
+      --border-color: var(--ion-color-success);
+    }
+
+    &:hover:not(.is-default) {
+      --background: var(--ion-color-step-200);
     }
   }
 }
 
-// Responsive design
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  ion-card {
-    margin: 0.25rem 0;
+  .address-list-container {
+    padding: 4px;
+  }
 
-    ion-card-content {
-      padding: 0.75rem;
+  ion-card {
+    margin: 12px 0;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 12px;
+
+    ion-button {
+      width: 100%;
     }
   }
 
-  ion-button {
-    font-size: 0.8rem;
-
-    ion-icon {
-      margin-right: 0.25rem;
-    }
+  .default-selection {
+    flex-direction: column;
+    gap: 12px;
   }
 }

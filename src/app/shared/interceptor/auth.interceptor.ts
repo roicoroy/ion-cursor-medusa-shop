@@ -15,6 +15,9 @@ export class AuthInterceptor implements HttpInterceptor {
   private authFlowService = inject(AuthFlowService);
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (request.url.includes('/auth/session')) {
+      return next.handle(request);
+    }
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         // Check if it's an authentication error (401 Unauthorized)

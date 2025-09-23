@@ -8,4 +8,5 @@ export * from './app.interface';
 export * from './medusa-line-items.interface';
 
 // Legacy interfaces (keep for backward compatibility)
-export * from './customer-details'; 
+export * from './customer-details';
+

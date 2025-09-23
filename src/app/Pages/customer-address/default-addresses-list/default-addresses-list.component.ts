@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, inject, OnChanges, SimpleChanges } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { IonButton, IonLabel, IonButtons, IonGrid, IonCardContent, IonRow, IonCol, IonCard, IonItem, IonIcon } from '@ionic/angular/standalone';
+import { IonButton, IonCardContent, IonCard, IonIcon } from '@ionic/angular/standalone';
 import { AddressViewComponent } from "../../../components/address-view/address-view.component";
 import { Router } from '@angular/router';
 import { AuthActions } from 'src/app/store/auth/auth.actions';
@@ -12,13 +12,11 @@ import { MedusaCustomer } from 'src/app/shared/interfaces/customer-product.inter
     templateUrl: './default-addresses-list.component.html',
     styleUrls: ['./default-addresses-list.component.scss'],
     standalone: true,
-    imports: [IonItem, IonCard, IonCol, IonRow, IonCardContent, IonGrid,
-        IonButtons,
-        IonLabel,
-        IonButton,
-        IonIcon,
-        CommonModule,
-        AddressViewComponent],
+    imports: [IonCard, IonCardContent,
+    IonButton,
+    IonIcon,
+    CommonModule,
+    AddressViewComponent],
 })
 export class DefaultAddressesListComponent implements OnChanges {
 

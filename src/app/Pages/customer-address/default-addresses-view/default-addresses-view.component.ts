@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { IonGrid, IonCardContent, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle } from '@ionic/angular/standalone';
 import { AddressViewComponent } from "../../../components/address-view/address-view.component";
 import { MedusaCustomer } from 'src/app/shared/interfaces/customer-product.interface';
-import { MedusaAddress } from 'src/app/Shared/interfaces/medusa-address';
+import { MedusaAddress } from '../../../shared/interfaces/medusa-address';
 
 @Component({
     selector: 'app-default-addresses-view',

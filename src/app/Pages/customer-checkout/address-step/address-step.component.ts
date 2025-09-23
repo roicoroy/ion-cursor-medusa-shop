@@ -11,7 +11,7 @@ import { CheckoutActions } from 'src/app/store/checkout/checkout.actions';
 import { MedusaCartState } from 'src/app/store/medusa-cart/medusa-cart.state';
 import { AppFacade, IAppFacadeState } from 'src/app/store/app.facade';
 import { RegionsState } from 'src/app/store/regions/regions.state';
-import { MedusaAddress } from 'src/app/Shared/interfaces/medusa-address';
+import { MedusaAddress } from 'src/app/shared/interfaces/medusa-address';
 import { DefaultAddressesViewComponent } from '../../customer-address/default-addresses-view/default-addresses-view.component';
 
 @Component({
